@@ -1,0 +1,6073 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>3. ExoPlayer源码分析之prepare方法 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="4. ExoPlayer源码分析之prepare序列图.html" />
+    
+    
+    <link rel="prev" href="2. ExoPlayer MediaSource简介.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    源码解析
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../SourceAnalysis/自定义View详解.html">
+            
+                <a href="../../SourceAnalysis/自定义View详解.html">
+            
+                    
+                    自定义View详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../SourceAnalysis/Activity界面绘制过程详解.html">
+            
+                <a href="../../SourceAnalysis/Activity界面绘制过程详解.html">
+            
+                    
+                    Activity界面绘制过程详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../SourceAnalysis/Activity启动过程.html">
+            
+                <a href="../../SourceAnalysis/Activity启动过程.html">
+            
+                    
+                    Activity启动过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../../SourceAnalysis/Android Touch事件分发详解.html">
+            
+                <a href="../../SourceAnalysis/Android Touch事件分发详解.html">
+            
+                    
+                    Android Touch事件分发详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../../SourceAnalysis/AsyncTask详解.html">
+            
+                <a href="../../SourceAnalysis/AsyncTask详解.html">
+            
+                    
+                    AsyncTask详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../../SourceAnalysis/butterknife源码详解.html">
+            
+                <a href="../../SourceAnalysis/butterknife源码详解.html">
+            
+                    
+                    butterknife源码详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../../SourceAnalysis/InstantRun详解.html">
+            
+                <a href="../../SourceAnalysis/InstantRun详解.html">
+            
+                    
+                    InstantRun详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../../SourceAnalysis/ListView源码分析.html">
+            
+                <a href="../../SourceAnalysis/ListView源码分析.html">
+            
+                    
+                    ListView源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../../SourceAnalysis/VideoView源码分析.html">
+            
+                <a href="../../SourceAnalysis/VideoView源码分析.html">
+            
+                    
+                    VideoView源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../../SourceAnalysis/View绘制过程详解.html">
+            
+                <a href="../../SourceAnalysis/View绘制过程详解.html">
+            
+                    
+                    View绘制过程详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../../SourceAnalysis/LeakCanary源码分析.html">
+            
+                <a href="../../SourceAnalysis/LeakCanary源码分析.html">
+            
+                    
+                    LeakCanary源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../../SourceAnalysis/ARouter解析.html">
+            
+                <a href="../../SourceAnalysis/ARouter解析.html">
+            
+                    
+                    ARouter解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" >
+            
+                <span>
+            
+                    
+                    网络部分
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.13.1" data-path="../../SourceAnalysis/Netowork/HttpURLConnection详解.html">
+            
+                <a href="../../SourceAnalysis/Netowork/HttpURLConnection详解.html">
+            
+                    
+                    HttpURLConnection详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.2" data-path="../../SourceAnalysis/Netowork/HttpURLConnection与HttpClient.html">
+            
+                <a href="../../SourceAnalysis/Netowork/HttpURLConnection与HttpClient.html">
+            
+                    
+                    HttpURLConnection与HttpClient
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.3" data-path="../../SourceAnalysis/Netowork/volley-retrofit-okhttp之我们该如何选择网路框架.html">
+            
+                <a href="../../SourceAnalysis/Netowork/volley-retrofit-okhttp之我们该如何选择网路框架.html">
+            
+                    
+                    volley-retrofit-okhttp之我们该如何选择网路框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.4" data-path="../../SourceAnalysis/Netowork/Volley源码分析.html">
+            
+                <a href="../../SourceAnalysis/Netowork/Volley源码分析.html">
+            
+                    
+                    Volley源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.5" data-path="../../SourceAnalysis/Netowork/Retrofit详解 上.html">
+            
+                <a href="../../SourceAnalysis/Netowork/Retrofit详解 上.html">
+            
+                    
+                    Retrofit详解(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.6" data-path="../../SourceAnalysis/Netowork/Retrofit详解 下.html">
+            
+                <a href="../../SourceAnalysis/Netowork/Retrofit详解 下.html">
+            
+                    
+                    Retrofit详解(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Dagger2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../Dagger2/1.Dagger2简介 一.html">
+            
+                <a href="../../Dagger2/1.Dagger2简介 一.html">
+            
+                    
+                    1.Dagger2简介(一)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../../Dagger2/2.Dagger2入门demo 二.html">
+            
+                <a href="../../Dagger2/2.Dagger2入门demo 二.html">
+            
+                    
+                    2.Dagger2入门demo(二)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../../Dagger2/3.Dagger2入门demo扩展 三.html">
+            
+                <a href="../../Dagger2/3.Dagger2入门demo扩展 三.html">
+            
+                    
+                    3.Dagger2入门demo扩展(三)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../../Dagger2/4.Dagger2单例 四.html">
+            
+                <a href="../../Dagger2/4.Dagger2单例 四.html">
+            
+                    
+                    4.Dagger2单例(四)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../../Dagger2/5.Dagger2Lay和Provider 五.html">
+            
+                <a href="../../Dagger2/5.Dagger2Lay和Provider 五.html">
+            
+                    
+                    5.Dagger2Lay和Provider(五)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../../Dagger2/6.Dagger2Android示例代码 六.html">
+            
+                <a href="../../Dagger2/6.Dagger2Android示例代码 六.html">
+            
+                    
+                    6.Dagger2Android示例代码(六)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../../Dagger2/7.Dagger2之dagger-android 七.html">
+            
+                <a href="../../Dagger2/7.Dagger2之dagger-android 七.html">
+            
+                    
+                    7.Dagger2之dagger-android(七)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../../Dagger2/8.Dagger2与MVP 八.html">
+            
+                <a href="../../Dagger2/8.Dagger2与MVP 八.html">
+            
+                    
+                    8.Dagger2与MVP(八)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../../Dagger2/9.Dagger2原理分析 九.html">
+            
+                <a href="../../Dagger2/9.Dagger2原理分析 九.html">
+            
+                    
+                    9.Dagger2原理分析(九)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    音视频开发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../搭建nginx+rtmp服务器.html">
+            
+                <a href="../搭建nginx+rtmp服务器.html">
+            
+                    
+                    搭建nginx+rtmp服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../视频播放相关内容总结.html">
+            
+                <a href="../视频播放相关内容总结.html">
+            
+                    
+                    视频播放相关内容总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" >
+            
+                <span>
+            
+                    
+                    Android音视频开发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.3.1" data-path="../Android音视频开发/Android WebRTC简介.html">
+            
+                <a href="../Android音视频开发/Android WebRTC简介.html">
+            
+                    
+                    Android WebRTC简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.2" data-path="../Android音视频开发/DLNA简介.html">
+            
+                <a href="../Android音视频开发/DLNA简介.html">
+            
+                    
+                    DLNA简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="../Android音视频开发/AudioTrack简介.html">
+            
+                <a href="../Android音视频开发/AudioTrack简介.html">
+            
+                    
+                    AudioTrack简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.4" data-path="../Android音视频开发/播放器性能优化.html">
+            
+                <a href="../Android音视频开发/播放器性能优化.html">
+            
+                    
+                    播放器性能优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.5" data-path="../Android音视频开发/MediaExtractor、MediaCodec、MediaMuxer.html">
+            
+                <a href="../Android音视频开发/MediaExtractor、MediaCodec、MediaMuxer.html">
+            
+                    
+                    MediaExtractor、MediaCodec、MediaMuxer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.6" data-path="../Android音视频开发/SurfaceView与TextureView.html">
+            
+                <a href="../Android音视频开发/SurfaceView与TextureView.html">
+            
+                    
+                    SurfaceView与TextureView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.7" data-path="../Android音视频开发/视频解码之软解与硬解.html">
+            
+                <a href="../Android音视频开发/视频解码之软解与硬解.html">
+            
+                    
+                    视频解码之软解与硬解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.8" data-path="../Android音视频开发/音视频同步原理.html">
+            
+                <a href="../Android音视频开发/音视频同步原理.html">
+            
+                    
+                    音视频同步原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.9" data-path="../Android音视频开发/音视频场景.html">
+            
+                <a href="../Android音视频开发/音视频场景.html">
+            
+                    
+                    音视频场景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.10" data-path="../Android音视频开发/1.音视频基础知识.html">
+            
+                <a href="../Android音视频开发/1.音视频基础知识.html">
+            
+                    
+                    1.音视频基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.11" data-path="../Android音视频开发/2.系统播放器MediaPlayer.html">
+            
+                <a href="../Android音视频开发/2.系统播放器MediaPlayer.html">
+            
+                    
+                    2.系统播放器MediaPlayer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.12" data-path="../Android音视频开发/11.播放组件封装.html">
+            
+                <a href="../Android音视频开发/11.播放组件封装.html">
+            
+                    
+                    11.播放组件封装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.13" data-path="../Android音视频开发/MediaMetadataRetriever.html">
+            
+                <a href="../Android音视频开发/MediaMetadataRetriever.html">
+            
+                    
+                    MediaMetadataRetriever
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" >
+            
+                <span>
+            
+                    
+                    Danmaku
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.4.1" data-path="../Danmaku/Android弹幕实现.html">
+            
+                <a href="../Danmaku/Android弹幕实现.html">
+            
+                    
+                    Android弹幕实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" >
+            
+                <span>
+            
+                    
+                    ExoPlayer
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.5.1" data-path="1. ExoPlayer简介.html">
+            
+                <a href="1. ExoPlayer简介.html">
+            
+                    
+                    1. ExoPlayer简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5.2" data-path="2. ExoPlayer MediaSource简介.html">
+            
+                <a href="2. ExoPlayer MediaSource简介.html">
+            
+                    
+                    2. ExoPlayer MediaSource简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.5.3" data-path="3. ExoPlayer源码分析之prepare方法.html">
+            
+                <a href="3. ExoPlayer源码分析之prepare方法.html">
+            
+                    
+                    3. ExoPlayer源码分析之prepare方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5.4" data-path="4. ExoPlayer源码分析之prepare序列图.html">
+            
+                <a href="4. ExoPlayer源码分析之prepare序列图.html">
+            
+                    
+                    4. ExoPlayer源码分析之prepare序列图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5.5" data-path="5. ExoPlayer源码分析之PlayerView.html">
+            
+                <a href="5. ExoPlayer源码分析之PlayerView.html">
+            
+                    
+                    5. ExoPlayer源码分析之PlayerView
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" >
+            
+                <span>
+            
+                    
+                    FFmpeg
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.6.1" data-path="../FFmpeg/1.FFmpeg简介.html">
+            
+                <a href="../FFmpeg/1.FFmpeg简介.html">
+            
+                    
+                    1.FFmpeg简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6.2" data-path="../FFmpeg/2.FFmpeg常用命令行.html">
+            
+                <a href="../FFmpeg/2.FFmpeg常用命令行.html">
+            
+                    
+                    2.FFmpeg常用命令行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6.3" data-path="../FFmpeg/3.FFmpeg切片.html">
+            
+                <a href="../FFmpeg/3.FFmpeg切片.html">
+            
+                    
+                    3.FFmpeg切片
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6.4" data-path="../FFmpeg/4.开发环境配置.html">
+            
+                <a href="../FFmpeg/4.开发环境配置.html">
+            
+                    
+                    4.开发环境配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6.5" data-path="../FFmpeg/5.FFmpeg核心功能.html">
+            
+                <a href="../FFmpeg/5.FFmpeg核心功能.html">
+            
+                    
+                    5.FFmpeg核心功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6.6" data-path="../FFmpeg/6.视频播放简介.html">
+            
+                <a href="../FFmpeg/6.视频播放简介.html">
+            
+                    
+                    6.视频播放简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" >
+            
+                <span>
+            
+                    
+                    OpenCV
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.7.1" data-path="../OpenCV/1.OpenCV简介.html">
+            
+                <a href="../OpenCV/1.OpenCV简介.html">
+            
+                    
+                    1.OpenCV简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.2" data-path="../OpenCV/2.绘制图形.html">
+            
+                <a href="../OpenCV/2.绘制图形.html">
+            
+                    
+                    2.绘制图形
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" >
+            
+                <span>
+            
+                    
+                    OpenGL
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.8.1" data-path="../OpenGL/1.OpenGL简介.html">
+            
+                <a href="../OpenGL/1.OpenGL简介.html">
+            
+                    
+                    1.OpenGL简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.2" data-path="../OpenGL/10.GLSurfaceView+MediaPlayer播放视频.html">
+            
+                <a href="../OpenGL/10.GLSurfaceView+MediaPlayer播放视频.html">
+            
+                    
+                    10.GLSurfaceView+MediaPlayer播放视频
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.3" data-path="../OpenGL/11.OpenGL ES滤镜.html">
+            
+                <a href="../OpenGL/11.OpenGL ES滤镜.html">
+            
+                    
+                    11.OpenGL ES滤镜
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.4" data-path="../OpenGL/12.FBO.html">
+            
+                <a href="../OpenGL/12.FBO.html">
+            
+                    
+                    12.FBO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.5" data-path="../OpenGL/13.LUT滤镜.html">
+            
+                <a href="../OpenGL/13.LUT滤镜.html">
+            
+                    
+                    13.LUT滤镜
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.6" data-path="../OpenGL/14.实例化.html">
+            
+                <a href="../OpenGL/14.实例化.html">
+            
+                    
+                    14.实例化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.7" data-path="../OpenGL/2.GLSurfaceView简介.html">
+            
+                <a href="../OpenGL/2.GLSurfaceView简介.html">
+            
+                    
+                    2.GLSurfaceView简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.8" data-path="../OpenGL/3.GLSurfaceView源码解析.html">
+            
+                <a href="../OpenGL/3.GLSurfaceView源码解析.html">
+            
+                    
+                    3.GLSurfaceView源码解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.9" data-path="../OpenGL/4.GLTextureView实现.html">
+            
+                <a href="../OpenGL/4.GLTextureView实现.html">
+            
+                    
+                    4.GLTextureView实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.10" data-path="../OpenGL/5.OpenGL ES绘制三角形.html">
+            
+                <a href="../OpenGL/5.OpenGL ES绘制三角形.html">
+            
+                    
+                    5.OpenGL ES绘制三角形
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.11" data-path="../OpenGL/6.OpenGL ES绘制矩形及圆形.html">
+            
+                <a href="../OpenGL/6.OpenGL ES绘制矩形及圆形.html">
+            
+                    
+                    6.OpenGL ES绘制矩形及圆形
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.12" data-path="../OpenGL/7.OpenGL ES着色器语言GLSL.html">
+            
+                <a href="../OpenGL/7.OpenGL ES着色器语言GLSL.html">
+            
+                    
+                    7.OpenGL ES着色器语言GLSL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.13" data-path="../OpenGL/8.GLES类及Matrix类.html">
+            
+                <a href="../OpenGL/8.GLES类及Matrix类.html">
+            
+                    
+                    8.GLES类及Matrix类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.14" data-path="../OpenGL/9.OpenGL ES纹理.html">
+            
+                <a href="../OpenGL/9.OpenGL ES纹理.html">
+            
+                    
+                    9.OpenGL ES纹理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" >
+            
+                <span>
+            
+                    
+                    P2P技术
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.9.1" data-path="../P2P技术/P2P.html">
+            
+                <a href="../P2P技术/P2P.html">
+            
+                    
+                    P2P
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9.2" data-path="../P2P技术/P2P原理_NAT穿透.html">
+            
+                <a href="../P2P技术/P2P原理_NAT穿透.html">
+            
+                    
+                    P2P原理_NAT穿透
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" >
+            
+                <span>
+            
+                    
+                    流媒体协议
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.10.1" data-path="../流媒体协议/DASH.html">
+            
+                <a href="../流媒体协议/DASH.html">
+            
+                    
+                    DASH
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10.2" data-path="../流媒体协议/HLS.html">
+            
+                <a href="../流媒体协议/HLS.html">
+            
+                    
+                    HLS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10.3" data-path="../流媒体协议/HTTP FLV.html">
+            
+                <a href="../流媒体协议/HTTP FLV.html">
+            
+                    
+                    HTTP FLV
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10.4" data-path="../流媒体协议/RTMP.html">
+            
+                <a href="../流媒体协议/RTMP.html">
+            
+                    
+                    RTMP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10.5" data-path="../流媒体协议/流媒体协议.html">
+            
+                <a href="../流媒体协议/流媒体协议.html">
+            
+                    
+                    流媒体协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" >
+            
+                <span>
+            
+                    
+                    视频封装格式
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.11.1" data-path="../视频封装格式/AVI.html">
+            
+                <a href="../视频封装格式/AVI.html">
+            
+                    
+                    AVI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11.2" data-path="../视频封装格式/FLV.html">
+            
+                <a href="../视频封装格式/FLV.html">
+            
+                    
+                    FLV
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11.3" data-path="../视频封装格式/M3U8.html">
+            
+                <a href="../视频封装格式/M3U8.html">
+            
+                    
+                    M3U8
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11.4" data-path="../视频封装格式/MP4格式详解.html">
+            
+                <a href="../视频封装格式/MP4格式详解.html">
+            
+                    
+                    MP4格式详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11.5" data-path="../视频封装格式/TS.html">
+            
+                <a href="../视频封装格式/TS.html">
+            
+                    
+                    TS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11.6" data-path="../视频封装格式/fMP4 vs ts.html">
+            
+                <a href="../视频封装格式/fMP4 vs ts.html">
+            
+                    
+                    fMP4 vs ts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11.7" data-path="../视频封装格式/fMP4格式详解.html">
+            
+                <a href="../视频封装格式/fMP4格式详解.html">
+            
+                    
+                    fMP4格式详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11.8" data-path="../视频封装格式/视频封装格式.html">
+            
+                <a href="../视频封装格式/视频封装格式.html">
+            
+                    
+                    视频封装格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" >
+            
+                <span>
+            
+                    
+                    视频编码
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.12.1" data-path="../视频编码/AV1.html">
+            
+                <a href="../视频编码/AV1.html">
+            
+                    
+                    AV1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12.2" data-path="../视频编码/H264.html">
+            
+                <a href="../视频编码/H264.html">
+            
+                    
+                    H264
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12.3" data-path="../视频编码/H265.html">
+            
+                <a href="../视频编码/H265.html">
+            
+                    
+                    H265
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12.4" data-path="../视频编码/视频编码原理.html">
+            
+                <a href="../视频编码/视频编码原理.html">
+            
+                    
+                    视频编码原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" >
+            
+                <span>
+            
+                    
+                    音频编码
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.13.1" data-path="../音频编码/AAC.html">
+            
+                <a href="../音频编码/AAC.html">
+            
+                    
+                    AAC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13.2" data-path="../音频编码/PCM.html">
+            
+                <a href="../音频编码/PCM.html">
+            
+                    
+                    PCM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13.3" data-path="../音频编码/WAV.html">
+            
+                <a href="../音频编码/WAV.html">
+            
+                    
+                    WAV
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13.4" data-path="../音频编码/音频编码格式.html">
+            
+                <a href="../音频编码/音频编码格式.html">
+            
+                    
+                    音频编码格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="../CDN及PCDN.html">
+            
+                <a href="../CDN及PCDN.html">
+            
+                    
+                    CDN及PCDN
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="../DNS及HTTPDNS.html">
+            
+                <a href="../DNS及HTTPDNS.html">
+            
+                    
+                    DNS及HTTPDNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="../WebRTC.html">
+            
+                <a href="../WebRTC.html">
+            
+                    
+                    WebRTC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="../关键帧.html">
+            
+                <a href="../关键帧.html">
+            
+                    
+                    关键帧
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    操作系统
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../../OperatingSystem/1.操作系统简介.html">
+            
+                <a href="../../OperatingSystem/1.操作系统简介.html">
+            
+                    
+                    1.操作系统简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../../OperatingSystem/2.进程与线程.html">
+            
+                <a href="../../OperatingSystem/2.进程与线程.html">
+            
+                    
+                    2.进程与线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../../OperatingSystem/3.内存管理.html">
+            
+                <a href="../../OperatingSystem/3.内存管理.html">
+            
+                    
+                    3.内存管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../../OperatingSystem/4.调度.html">
+            
+                <a href="../../OperatingSystem/4.调度.html">
+            
+                    
+                    4.调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../../OperatingSystem/5.IO.html">
+            
+                <a href="../../OperatingSystem/5.IO.html">
+            
+                    
+                    5.IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../../OperatingSystem/6.文件管理.html">
+            
+                <a href="../../OperatingSystem/6.文件管理.html">
+            
+                    
+                    6.文件管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../../OperatingSystem/7.嵌入式系统.html">
+            
+                <a href="../../OperatingSystem/7.嵌入式系统.html">
+            
+                    
+                    7.嵌入式系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../../OperatingSystem/8.虚拟机.html">
+            
+                <a href="../../OperatingSystem/8.虚拟机.html">
+            
+                    
+                    8.虚拟机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" >
+            
+                <span>
+            
+                    
+                    Android内核
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.9.1" data-path="../../OperatingSystem/AndroidKernal/1.Android进程间通信.html">
+            
+                <a href="../../OperatingSystem/AndroidKernal/1.Android进程间通信.html">
+            
+                    
+                    1.Android进程间通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9.2" data-path="../../OperatingSystem/AndroidKernal/2.Android线程间通信之Handler消息机制.html">
+            
+                <a href="../../OperatingSystem/AndroidKernal/2.Android线程间通信之Handler消息机制.html">
+            
+                    
+                    2.Android线程间通信之Handler消息机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9.3" data-path="../../OperatingSystem/AndroidKernal/3.Android Framework框架.html">
+            
+                <a href="../../OperatingSystem/AndroidKernal/3.Android Framework框架.html">
+            
+                    
+                    3.Android Framework框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9.4" data-path="../../OperatingSystem/AndroidKernal/4.ActivityManagerService简介.html">
+            
+                <a href="../../OperatingSystem/AndroidKernal/4.ActivityManagerService简介.html">
+            
+                    
+                    4.ActivityManagerService简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9.5" data-path="../../OperatingSystem/AndroidKernal/5.Android消息获取.html">
+            
+                <a href="../../OperatingSystem/AndroidKernal/5.Android消息获取.html">
+            
+                    
+                    5.Android消息获取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9.6" data-path="../../OperatingSystem/AndroidKernal/6.屏幕绘制基础.html">
+            
+                <a href="../../OperatingSystem/AndroidKernal/6.屏幕绘制基础.html">
+            
+                    
+                    6.屏幕绘制基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9.7" data-path="../../OperatingSystem/AndroidKernal/7.View绘制原理.html">
+            
+                <a href="../../OperatingSystem/AndroidKernal/7.View绘制原理.html">
+            
+                    
+                    7.View绘制原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9.8" data-path="../../OperatingSystem/AndroidKernal/8.WindowManagerService简介.html">
+            
+                <a href="../../OperatingSystem/AndroidKernal/8.WindowManagerService简介.html">
+            
+                    
+                    8.WindowManagerService简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9.9" data-path="../../OperatingSystem/AndroidKernal/9.PackageManagerService简介.html">
+            
+                <a href="../../OperatingSystem/AndroidKernal/9.PackageManagerService简介.html">
+            
+                    
+                    9.PackageManagerService简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    架构设计
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../../Architect/1.架构简介.html">
+            
+                <a href="../../Architect/1.架构简介.html">
+            
+                    
+                    1.架构简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../../Architect/2.UML简介.html">
+            
+                <a href="../../Architect/2.UML简介.html">
+            
+                    
+                    2.UML简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    Jetpack
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../../Jetpack/Jetpack简介.html">
+            
+                <a href="../../Jetpack/Jetpack简介.html">
+            
+                    
+                    Jetpack简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" >
+            
+                <span>
+            
+                    
+                    architecture
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.2.1" data-path="../../Jetpack/architecture/1.简介.html">
+            
+                <a href="../../Jetpack/architecture/1.简介.html">
+            
+                    
+                    1.简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.2" data-path="../../Jetpack/architecture/2.ViewBinding简介.html">
+            
+                <a href="../../Jetpack/architecture/2.ViewBinding简介.html">
+            
+                    
+                    2.ViewBinding简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.3" data-path="../../Jetpack/architecture/3.Lifecycle简介.html">
+            
+                <a href="../../Jetpack/architecture/3.Lifecycle简介.html">
+            
+                    
+                    3.Lifecycle简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.4" data-path="../../Jetpack/architecture/4.ViewModel简介.html">
+            
+                <a href="../../Jetpack/architecture/4.ViewModel简介.html">
+            
+                    
+                    4.ViewModel简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.5" data-path="../../Jetpack/architecture/5.LiveData简介.html">
+            
+                <a href="../../Jetpack/architecture/5.LiveData简介.html">
+            
+                    
+                    5.LiveData简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.6" data-path="../../Jetpack/architecture/6.DataBinding简介.html">
+            
+                <a href="../../Jetpack/architecture/6.DataBinding简介.html">
+            
+                    
+                    6.DataBinding简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.7" data-path="../../Jetpack/architecture/7.Room简介.html">
+            
+                <a href="../../Jetpack/architecture/7.Room简介.html">
+            
+                    
+                    7.Room简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.8" data-path="../../Jetpack/architecture/8.PagingLibrary简介.html">
+            
+                <a href="../../Jetpack/architecture/8.PagingLibrary简介.html">
+            
+                    
+                    8.PagingLibrary简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.9" data-path="../../Jetpack/architecture/9.App Startup简介.html">
+            
+                <a href="../../Jetpack/architecture/9.App Startup简介.html">
+            
+                    
+                    9.App Startup简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.10" data-path="../../Jetpack/architecture/10.DataStore简介.html">
+            
+                <a href="../../Jetpack/architecture/10.DataStore简介.html">
+            
+                    
+                    10.DataStore简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.11" data-path="../../Jetpack/architecture/11.Hilt简介.html">
+            
+                <a href="../../Jetpack/architecture/11.Hilt简介.html">
+            
+                    
+                    11.Hilt简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.12" data-path="../../Jetpack/architecture/12.Navigation简介.html">
+            
+                <a href="../../Jetpack/architecture/12.Navigation简介.html">
+            
+                    
+                    12.Navigation简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.13" data-path="../../Jetpack/architecture/13.Jetpack MVVM简介.html">
+            
+                <a href="../../Jetpack/architecture/13.Jetpack MVVM简介.html">
+            
+                    
+                    13.Jetpack MVVM简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2.14" data-path="../../Jetpack/architecture/14.findViewById的过去及未来.html">
+            
+                <a href="../../Jetpack/architecture/14.findViewById的过去及未来.html">
+            
+                    
+                    14.findViewById的过去及未来
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" >
+            
+                <span>
+            
+                    
+                    ui
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.3.1" data-path="../../Jetpack/ui/Jetpack Compose简介.html">
+            
+                <a href="../../Jetpack/ui/Jetpack Compose简介.html">
+            
+                    
+                    Jetpack Compose简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3.2" >
+            
+                <span>
+            
+                    
+                    material
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.3.2.1" data-path="../../Jetpack/ui/material/1.MaterialToolbar简介.html">
+            
+                <a href="../../Jetpack/ui/material/1.MaterialToolbar简介.html">
+            
+                    
+                    1.MaterialToolbar简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3.2.2" data-path="../../Jetpack/ui/material/2.NavigationView简介.html">
+            
+                <a href="../../Jetpack/ui/material/2.NavigationView简介.html">
+            
+                    
+                    2.NavigationView简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3.2.3" data-path="../../Jetpack/ui/material/3.NestedScrollView简介.html">
+            
+                <a href="../../Jetpack/ui/material/3.NestedScrollView简介.html">
+            
+                    
+                    3.NestedScrollView简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3.2.4" data-path="../../Jetpack/ui/material/4.CoordinatorLayout简介.html">
+            
+                <a href="../../Jetpack/ui/material/4.CoordinatorLayout简介.html">
+            
+                    
+                    4.CoordinatorLayout简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3.2.5" data-path="../../Jetpack/ui/material/5.AppBarLayout简介.html">
+            
+                <a href="../../Jetpack/ui/material/5.AppBarLayout简介.html">
+            
+                    
+                    5.AppBarLayout简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3.2.6" data-path="../../Jetpack/ui/material/6.CollapsingToolbarLayout简介.html">
+            
+                <a href="../../Jetpack/ui/material/6.CollapsingToolbarLayout简介.html">
+            
+                    
+                    6.CollapsingToolbarLayout简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3.2.7" data-path="../../Jetpack/ui/material/7.Snackbar简介.html">
+            
+                <a href="../../Jetpack/ui/material/7.Snackbar简介.html">
+            
+                    
+                    7.Snackbar简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3.2.8" data-path="../../Jetpack/ui/material/8.TabLayout简介.html">
+            
+                <a href="../../Jetpack/ui/material/8.TabLayout简介.html">
+            
+                    
+                    8.TabLayout简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3.2.9" data-path="../../Jetpack/ui/material/9.BottomNavigation简介.html">
+            
+                <a href="../../Jetpack/ui/material/9.BottomNavigation简介.html">
+            
+                    
+                    9.BottomNavigation简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" >
+            
+                <span>
+            
+                    
+                    foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.4.1" data-path="../../Jetpack/foundation/1.简介.html">
+            
+                <a href="../../Jetpack/foundation/1.简介.html">
+            
+                    
+                    1.简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" >
+            
+                <span>
+            
+                    
+                    behavior
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.5.1" data-path="../../Jetpack/behavior/1.简介.html">
+            
+                <a href="../../Jetpack/behavior/1.简介.html">
+            
+                    
+                    1.简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    图片加载
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../../ImageLoaderLibrary/Glide简介 上.html">
+            
+                <a href="../../ImageLoaderLibrary/Glide简介 上.html">
+            
+                    
+                    1.Glide简介(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../../ImageLoaderLibrary/Glide简介 下.html">
+            
+                <a href="../../ImageLoaderLibrary/Glide简介 下.html">
+            
+                    
+                    2.Glide简介(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../../ImageLoaderLibrary/Coil简介.html">
+            
+                <a href="../../ImageLoaderLibrary/Coil简介.html">
+            
+                    
+                    3.Coil简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../../ImageLoaderLibrary/图片加载库比较.html">
+            
+                <a href="../../ImageLoaderLibrary/图片加载库比较.html">
+            
+                    
+                    4.图片加载库比较
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    RxJava
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../../RxJavaPart/1.RxJava详解 一.html">
+            
+                <a href="../../RxJavaPart/1.RxJava详解 一.html">
+            
+                    
+                    1.RxJava详解(一)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../../RxJavaPart/2.RxJava详解 二.html">
+            
+                <a href="../../RxJavaPart/2.RxJava详解 二.html">
+            
+                    
+                    2.RxJava详解(二)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../../RxJavaPart/3.RxJava详解 三.html">
+            
+                <a href="../../RxJavaPart/3.RxJava详解 三.html">
+            
+                    
+                    3.RxJava详解(三)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../../RxJavaPart/4.RxJava详解之执行原理 四.html">
+            
+                <a href="../../RxJavaPart/4.RxJava详解之执行原理 四.html">
+            
+                    
+                    4.RxJava详解之执行原理(四)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../../RxJavaPart/5.RxJava详解之操作符执行原理 五.html">
+            
+                <a href="../../RxJavaPart/5.RxJava详解之操作符执行原理 五.html">
+            
+                    
+                    5.RxJava详解之操作符执行原理(五)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../../RxJavaPart/6.RxJava详解之线程调度原理 六.html">
+            
+                <a href="../../RxJavaPart/6.RxJava详解之线程调度原理 六.html">
+            
+                    
+                    6.RxJava详解之线程调度原理(六)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="../../RxJavaPart/7.RxJava系列全家桶.html">
+            
+                <a href="../../RxJavaPart/7.RxJava系列全家桶.html">
+            
+                    
+                    7.RxJava系列全家桶
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    开发工具
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../../Tools&Library/目前流行的开发组合.html">
+            
+                <a href="../../Tools&Library/目前流行的开发组合.html">
+            
+                    
+                    目前流行的开发组合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../../Tools&Library/性能优化相关工具.html">
+            
+                <a href="../../Tools&Library/性能优化相关工具.html">
+            
+                    
+                    性能优化相关工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../../Tools&Library/Android开发工具及类库.html">
+            
+                <a href="../../Tools&Library/Android开发工具及类库.html">
+            
+                    
+                    Android开发工具及类库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../../Tools&Library/Github个人主页绑定域名.html">
+            
+                <a href="../../Tools&Library/Github个人主页绑定域名.html">
+            
+                    
+                    Github个人主页绑定域名
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.5" data-path="../../Tools&Library/Markdown学习手册.html">
+            
+                <a href="../../Tools&Library/Markdown学习手册.html">
+            
+                    
+                    Markdown学习手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.6" data-path="../../Tools&Library/MAT内存分析.html">
+            
+                <a href="../../Tools&Library/MAT内存分析.html">
+            
+                    
+                    MAT内存分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.7" data-path="../../Tools&Library/调试平台Flipper.html">
+            
+                <a href="../../Tools&Library/调试平台Flipper.html">
+            
+                    
+                    调试平台Flipper
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.8" data-path="../../Tools&Library/Icon制作.html">
+            
+                <a href="../../Tools&Library/Icon制作.html">
+            
+                    
+                    Icon制作
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Kotlin学习
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../../KotlinCourse/1.Kotlin_简介&变量&类&接口.html">
+            
+                <a href="../../KotlinCourse/1.Kotlin_简介&变量&类&接口.html">
+            
+                    
+                    1.Kotlin_简介&变量&类&接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../../KotlinCourse/10.Kotlin_设计模式.html">
+            
+                <a href="../../KotlinCourse/10.Kotlin_设计模式.html">
+            
+                    
+                    10.Kotlin_设计模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../../KotlinCourse/2.Kotlin_高阶函数&Lambda&内联函数.html">
+            
+                <a href="../../KotlinCourse/2.Kotlin_高阶函数&Lambda&内联函数.html">
+            
+                    
+                    2.Kotlin_高阶函数&Lambda&内联函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.4" data-path="../../KotlinCourse/3.Kotlin_数字&字符串&数组&集合.html">
+            
+                <a href="../../KotlinCourse/3.Kotlin_数字&字符串&数组&集合.html">
+            
+                    
+                    3.Kotlin_数字&字符串&数组&集合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.5" data-path="../../KotlinCourse/4.Kotlin_表达式&关键字.html">
+            
+                <a href="../../KotlinCourse/4.Kotlin_表达式&关键字.html">
+            
+                    
+                    4.Kotlin_表达式&关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.6" data-path="../../KotlinCourse/5.Kotlin_内部类&密封类&枚举&委托.html">
+            
+                <a href="../../KotlinCourse/5.Kotlin_内部类&密封类&枚举&委托.html">
+            
+                    
+                    5.Kotlin_内部类&密封类&枚举&委托
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.7" data-path="../../KotlinCourse/6.Kotlin_多继承问题.html">
+            
+                <a href="../../KotlinCourse/6.Kotlin_多继承问题.html">
+            
+                    
+                    6.Kotlin_多继承问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.8" data-path="../../KotlinCourse/7.Kotlin_注解&反射&扩展.html">
+            
+                <a href="../../KotlinCourse/7.Kotlin_注解&反射&扩展.html">
+            
+                    
+                    7.Kotlin_注解&反射&扩展
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.9" data-path="../../KotlinCourse/8.Kotlin_协程.html">
+            
+                <a href="../../KotlinCourse/8.Kotlin_协程.html">
+            
+                    
+                    8.Kotlin_协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.10" data-path="../../KotlinCourse/9.Kotlin_androidktx.html">
+            
+                <a href="../../KotlinCourse/9.Kotlin_androidktx.html">
+            
+                    
+                    9.Kotlin_androidktx
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    Gradle&Maven
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../../Gradle&Maven/Gradle专题.html">
+            
+                <a href="../../Gradle&Maven/Gradle专题.html">
+            
+                    
+                    Gradle专题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../../Gradle&Maven/发布library到Maven仓库.html">
+            
+                <a href="../../Gradle&Maven/发布library到Maven仓库.html">
+            
+                    
+                    发布library到Maven仓库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../../Gradle&Maven/Composing builds简介.html">
+            
+                <a href="../../Gradle&Maven/Composing builds简介.html">
+            
+                    
+                    Composing builds简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../../Gradle&Maven/duplicate class冲突解决.html">
+            
+                <a href="../../Gradle&Maven/duplicate class冲突解决.html">
+            
+                    
+                    duplicate class冲突解决
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../../Gradle&Maven/kts.html">
+            
+                <a href="../../Gradle&Maven/kts.html">
+            
+                    
+                    kts
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    AppPublish
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../../AppPublish/使用Jenkins实现自动化打包.html">
+            
+                <a href="../../AppPublish/使用Jenkins实现自动化打包.html">
+            
+                    
+                    使用Jenkins实现自动化打包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../../AppPublish/Android应用发布.html">
+            
+                <a href="../../AppPublish/Android应用发布.html">
+            
+                    
+                    Android应用发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../../AppPublish/Zipalign优化.html">
+            
+                <a href="../../AppPublish/Zipalign优化.html">
+            
+                    
+                    Zipalign优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    Android Studio使用教程
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../../AndroidStudioCourse/AndroidStudio使用教程 第一弹.html">
+            
+                <a href="../../AndroidStudioCourse/AndroidStudio使用教程 第一弹.html">
+            
+                    
+                    1.AndroidStudio使用教程(第一弹)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../../AndroidStudioCourse/AndroidStudio使用教程 第二弹.html">
+            
+                <a href="../../AndroidStudioCourse/AndroidStudio使用教程 第二弹.html">
+            
+                    
+                    2.AndroidStudio使用教程(第二弹)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../../AndroidStudioCourse/AndroidStudio使用教程 第三弹.html">
+            
+                <a href="../../AndroidStudioCourse/AndroidStudio使用教程 第三弹.html">
+            
+                    
+                    3.AndroidStudio使用教程(第三弹)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../../AndroidStudioCourse/AndroidStudio使用教程 第四弹.html">
+            
+                <a href="../../AndroidStudioCourse/AndroidStudio使用教程 第四弹.html">
+            
+                    
+                    4.AndroidStudio使用教程(第四弹)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../../AndroidStudioCourse/AndroidStudio使用教程 第五弹.html">
+            
+                <a href="../../AndroidStudioCourse/AndroidStudio使用教程 第五弹.html">
+            
+                    
+                    5.AndroidStudio使用教程(第五弹)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.6" data-path="../../AndroidStudioCourse/AndroidStudio使用教程 第六弹.html">
+            
+                <a href="../../AndroidStudioCourse/AndroidStudio使用教程 第六弹.html">
+            
+                    
+                    6.AndroidStudio使用教程(第六弹)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.7" data-path="../../AndroidStudioCourse/AndroidStudio使用教程 第七弹.html">
+            
+                <a href="../../AndroidStudioCourse/AndroidStudio使用教程 第七弹.html">
+            
+                    
+                    7.AndroidStudio使用教程(第七弹)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.8" data-path="../../AndroidStudioCourse/Android Studio你可能不知道的操作.html">
+            
+                <a href="../../AndroidStudioCourse/Android Studio你可能不知道的操作.html">
+            
+                    
+                    8.Android Studio你可能不知道的操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.9" data-path="../../AndroidStudioCourse/AndroidStudio提高Build速度.html">
+            
+                <a href="../../AndroidStudioCourse/AndroidStudio提高Build速度.html">
+            
+                    
+                    9.AndroidStudio提高Build速度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.10" data-path="../../AndroidStudioCourse/AndroidStudio中进行ndk开发.html">
+            
+                <a href="../../AndroidStudioCourse/AndroidStudio中进行ndk开发.html">
+            
+                    
+                    10.AndroidStudio中进行ndk开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    进阶部分
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../../AdavancedPart/布局优化.html">
+            
+                <a href="../../AdavancedPart/布局优化.html">
+            
+                    
+                    布局优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../../AdavancedPart/屏幕适配之百分比方案详解.html">
+            
+                <a href="../../AdavancedPart/屏幕适配之百分比方案详解.html">
+            
+                    
+                    屏幕适配之百分比方案详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.3" data-path="../../AdavancedPart/1.热修复实现 一.html">
+            
+                <a href="../../AdavancedPart/1.热修复实现 一.html">
+            
+                    
+                    1.热修复实现(一)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.4" data-path="../../AdavancedPart/2.热修复实现 二.html">
+            
+                <a href="../../AdavancedPart/2.热修复实现 二.html">
+            
+                    
+                    2.热修复实现(二)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.5" data-path="../../AdavancedPart/3.热修复_addAssetPath不同版本区别原因 三.html">
+            
+                <a href="../../AdavancedPart/3.热修复_addAssetPath不同版本区别原因 三.html">
+            
+                    
+                    3.热修复_addAssetPath不同版本区别原因(三)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.6" data-path="../../AdavancedPart/如何让Service常驻内存.html">
+            
+                <a href="../../AdavancedPart/如何让Service常驻内存.html">
+            
+                    
+                    如何让Service常驻内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.7" data-path="../../AdavancedPart/通过Hardware Layer提高动画性能.html">
+            
+                <a href="../../AdavancedPart/通过Hardware Layer提高动画性能.html">
+            
+                    
+                    通过Hardware Layer提高动画性能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.8" data-path="../../AdavancedPart/性能优化.html">
+            
+                <a href="../../AdavancedPart/性能优化.html">
+            
+                    
+                    性能优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.9" data-path="../../AdavancedPart/注解使用.html">
+            
+                <a href="../../AdavancedPart/注解使用.html">
+            
+                    
+                    注解使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.10" data-path="../../AdavancedPart/Android6.0权限系统.html">
+            
+                <a href="../../AdavancedPart/Android6.0权限系统.html">
+            
+                    
+                    Android6.0权限系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.11" data-path="../../AdavancedPart/Android开发不申请权限来使用对应功能.html">
+            
+                <a href="../../AdavancedPart/Android开发不申请权限来使用对应功能.html">
+            
+                    
+                    Android开发不申请权限来使用对应功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.12" data-path="../../AdavancedPart/Android开发中的MVP模式详解.html">
+            
+                <a href="../../AdavancedPart/Android开发中的MVP模式详解.html">
+            
+                    
+                    Android开发中的MVP模式详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.13" data-path="../../AdavancedPart/Android启动模式详解.html">
+            
+                <a href="../../AdavancedPart/Android启动模式详解.html">
+            
+                    
+                    Android启动模式详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.14" data-path="../../AdavancedPart/Android卸载反馈.html">
+            
+                <a href="../../AdavancedPart/Android卸载反馈.html">
+            
+                    
+                    Android卸载反馈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.15" data-path="../../AdavancedPart/ApplicationId vs PackageName.html">
+            
+                <a href="../../AdavancedPart/ApplicationId vs PackageName.html">
+            
+                    
+                    ApplicationId vs PackageName
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.16" data-path="../../AdavancedPart/AndroidRuntime_ART与Dalvik.html">
+            
+                <a href="../../AdavancedPart/AndroidRuntime_ART与Dalvik.html">
+            
+                    
+                    AndroidRuntime_ART与Dalvik
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.17" data-path="../../AdavancedPart/BroadcastReceiver安全问题.html">
+            
+                <a href="../../AdavancedPart/BroadcastReceiver安全问题.html">
+            
+                    
+                    BroadcastReceiver安全问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.18" data-path="../../AdavancedPart/Crash及ANR分析.html">
+            
+                <a href="../../AdavancedPart/Crash及ANR分析.html">
+            
+                    
+                    Crash及ANR分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.19" data-path="../../AdavancedPart/Library项目中资源id使用case时报错.html">
+            
+                <a href="../../AdavancedPart/Library项目中资源id使用case时报错.html">
+            
+                    
+                    Library项目中资源id使用case时报错
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.20" data-path="../../AdavancedPart/Mac下配置adb及Android命令.html">
+            
+                <a href="../../AdavancedPart/Mac下配置adb及Android命令.html">
+            
+                    
+                    Mac下配置adb及Android命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.21" data-path="../../AdavancedPart/RecyclerView专题.html">
+            
+                <a href="../../AdavancedPart/RecyclerView专题.html">
+            
+                    
+                    RecyclerView专题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.22" data-path="../../AdavancedPart/ConstraintLaayout简介.html">
+            
+                <a href="../../AdavancedPart/ConstraintLaayout简介.html">
+            
+                    
+                    ConstraintLaayout简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.23" data-path="../../AdavancedPart/Android WorkManager.html">
+            
+                <a href="../../AdavancedPart/Android WorkManager.html">
+            
+                    
+                    Android WorkManager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.24" data-path="../../AdavancedPart/OOM问题分析.html">
+            
+                <a href="../../AdavancedPart/OOM问题分析.html">
+            
+                    
+                    OOM问题分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.25" data-path="../../AdavancedPart/AOP.html">
+            
+                <a href="../../AdavancedPart/AOP.html">
+            
+                    
+                    AOP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.26" data-path="../../AdavancedPart/ARouter.html">
+            
+                <a href="../../AdavancedPart/ARouter.html">
+            
+                    
+                    ARouter
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Java基础及算法
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" >
+            
+                <span>
+            
+                    
+                    数据结构和算法
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1.1" data-path="../../JavaKnowledge/数据结构和算法/数据结构.html">
+            
+                <a href="../../JavaKnowledge/数据结构和算法/数据结构.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.1.2" data-path="../../JavaKnowledge/数据结构和算法/算法.html">
+            
+                <a href="../../JavaKnowledge/数据结构和算法/算法.html">
+            
+                    
+                    算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.1.3" data-path="../../JavaKnowledge/数据结构和算法/1. LeetCode_两数之和.html">
+            
+                <a href="../../JavaKnowledge/数据结构和算法/1. LeetCode_两数之和.html">
+            
+                    
+                    1. LeetCode_两数之和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.1.4" data-path="../../JavaKnowledge/数据结构和算法/2. LeetCode_两数相加.html">
+            
+                <a href="../../JavaKnowledge/数据结构和算法/2. LeetCode_两数相加.html">
+            
+                    
+                    2. LeetCode_两数相加
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.1.5" data-path="../../JavaKnowledge/数据结构和算法/3. LeetCode_无重复字符的最长子串.html">
+            
+                <a href="../../JavaKnowledge/数据结构和算法/3. LeetCode_无重复字符的最长子串.html">
+            
+                    
+                    3. LeetCode_无重复字符的最长子串
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../../JavaKnowledge/数据结构和算法/八种排序算法.html">
+            
+                <a href="../../JavaKnowledge/数据结构和算法/八种排序算法.html">
+            
+                    
+                    八种排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="../../JavaKnowledge/线程池简介.html">
+            
+                <a href="../../JavaKnowledge/线程池简介.html">
+            
+                    
+                    线程池简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="../../JavaKnowledge/设计模式.html">
+            
+                <a href="../../JavaKnowledge/设计模式.html">
+            
+                    
+                    设计模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="../../JavaKnowledge/动态代理.html">
+            
+                <a href="../../JavaKnowledge/动态代理.html">
+            
+                    
+                    动态代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.6" data-path="../../JavaKnowledge/常用命令行大全.html">
+            
+                <a href="../../JavaKnowledge/常用命令行大全.html">
+            
+                    
+                    常用命令行大全
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.7" data-path="../../JavaKnowledge/单例的最佳实现方式.html">
+            
+                <a href="../../JavaKnowledge/单例的最佳实现方式.html">
+            
+                    
+                    单例的最佳实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.8" data-path="../../JavaKnowledge/获取今后多少天后的日期.html">
+            
+                <a href="../../JavaKnowledge/获取今后多少天后的日期.html">
+            
+                    
+                    获取今后多少天后的日期
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.9" data-path="../../JavaKnowledge/剑指Offer 上.html">
+            
+                <a href="../../JavaKnowledge/剑指Offer 上.html">
+            
+                    
+                    剑指Offer(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.10" data-path="../../JavaKnowledge/剑指Offer 下.html">
+            
+                <a href="../../JavaKnowledge/剑指Offer 下.html">
+            
+                    
+                    剑指Offer(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.11" data-path="../../JavaKnowledge/强引用、软引用、弱引用、虚引用.html">
+            
+                <a href="../../JavaKnowledge/强引用、软引用、弱引用、虚引用.html">
+            
+                    
+                    强引用、软引用、弱引用、虚引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.12" data-path="../../JavaKnowledge/生产者消费者.html">
+            
+                <a href="../../JavaKnowledge/生产者消费者.html">
+            
+                    
+                    生产者消费者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.13" data-path="../../JavaKnowledge/数据加密及解密.html">
+            
+                <a href="../../JavaKnowledge/数据加密及解密.html">
+            
+                    
+                    数据加密及解密
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.14" data-path="../../JavaKnowledge/死锁.html">
+            
+                <a href="../../JavaKnowledge/死锁.html">
+            
+                    
+                    死锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.15" data-path="../../JavaKnowledge/网络请求相关内容总结.html">
+            
+                <a href="../../JavaKnowledge/网络请求相关内容总结.html">
+            
+                    
+                    网络请求相关内容总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.16" data-path="../../JavaKnowledge/Java并发编程之原子性、可见性以及有序性.html">
+            
+                <a href="../../JavaKnowledge/Java并发编程之原子性、可见性以及有序性.html">
+            
+                    
+                    Java并发编程之原子性、可见性以及有序性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.17" data-path="../../JavaKnowledge/Base64加密.html">
+            
+                <a href="../../JavaKnowledge/Base64加密.html">
+            
+                    
+                    Base64加密
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.18" data-path="../../JavaKnowledge/Git简介.html">
+            
+                <a href="../../JavaKnowledge/Git简介.html">
+            
+                    
+                    Git简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.19" data-path="../../JavaKnowledge/hashCode与equals.html">
+            
+                <a href="../../JavaKnowledge/hashCode与equals.html">
+            
+                    
+                    hashCode与equals
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.20" data-path="../../JavaKnowledge/HashMap实现原理分析.html">
+            
+                <a href="../../JavaKnowledge/HashMap实现原理分析.html">
+            
+                    
+                    HashMap实现原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.21" data-path="../../JavaKnowledge/Java基础面试题.html">
+            
+                <a href="../../JavaKnowledge/Java基础面试题.html">
+            
+                    
+                    Java基础面试题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.22" data-path="../../JavaKnowledge/JVM垃圾回收机制.html">
+            
+                <a href="../../JavaKnowledge/JVM垃圾回收机制.html">
+            
+                    
+                    JVM垃圾回收机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.23" data-path="../../JavaKnowledge/MD5加密.html">
+            
+                <a href="../../JavaKnowledge/MD5加密.html">
+            
+                    
+                    MD5加密
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.24" data-path="../../JavaKnowledge/MVC与MVP及MVVM.html">
+            
+                <a href="../../JavaKnowledge/MVC与MVP及MVVM.html">
+            
+                    
+                    MVC与MVP及MVVM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.25" data-path="../../JavaKnowledge/RMB大小写转换.html">
+            
+                <a href="../../JavaKnowledge/RMB大小写转换.html">
+            
+                    
+                    RMB大小写转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.26" data-path="../../JavaKnowledge/Vim使用教程.html">
+            
+                <a href="../../JavaKnowledge/Vim使用教程.html">
+            
+                    
+                    Vim使用教程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.27" data-path="../../JavaKnowledge/volatile和Synchronized区别.html">
+            
+                <a href="../../JavaKnowledge/volatile和Synchronized区别.html">
+            
+                    
+                    volatile和Synchronized区别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.28" data-path="../../JavaKnowledge/Http与Https的区别.html">
+            
+                <a href="../../JavaKnowledge/Http与Https的区别.html">
+            
+                    
+                    Http与Https的区别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.29" data-path="../../JavaKnowledge/Top-K问题.html">
+            
+                <a href="../../JavaKnowledge/Top-K问题.html">
+            
+                    
+                    Top-K问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.30" data-path="../../JavaKnowledge/Java内存模型.html">
+            
+                <a href="../../JavaKnowledge/Java内存模型.html">
+            
+                    
+                    Java内存模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.31" data-path="../../JavaKnowledge/JVM架构.html">
+            
+                <a href="../../JavaKnowledge/JVM架构.html">
+            
+                    
+                    JVM架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.32" data-path="../../JavaKnowledge/python3入门.html">
+            
+                <a href="../../JavaKnowledge/python3入门.html">
+            
+                    
+                    python3入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" >
+            
+                <span>
+            
+                    
+                    基础部分
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="../../BasicKnowledge/安全退出应用程序.html">
+            
+                <a href="../../BasicKnowledge/安全退出应用程序.html">
+            
+                    
+                    安全退出应用程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.2" data-path="../../BasicKnowledge/病毒.html">
+            
+                <a href="../../BasicKnowledge/病毒.html">
+            
+                    
+                    病毒
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.3" data-path="../../BasicKnowledge/超级管理员 DevicePoliceManager.html">
+            
+                <a href="../../BasicKnowledge/超级管理员 DevicePoliceManager.html">
+            
+                    
+                    超级管理员(DevicePoliceManager)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.4" data-path="../../BasicKnowledge/程序的启动、卸载和分享.html">
+            
+                <a href="../../BasicKnowledge/程序的启动、卸载和分享.html">
+            
+                    
+                    程序的启动、卸载和分享
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.5" data-path="../../BasicKnowledge/代码混淆.html">
+            
+                <a href="../../BasicKnowledge/代码混淆.html">
+            
+                    
+                    代码混淆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.6" data-path="../../BasicKnowledge/读取用户logcat日志.html">
+            
+                <a href="../../BasicKnowledge/读取用户logcat日志.html">
+            
+                    
+                    读取用户logcat日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.7" data-path="../../BasicKnowledge/短信广播接收者.html">
+            
+                <a href="../../BasicKnowledge/短信广播接收者.html">
+            
+                    
+                    短信广播接收者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.8" data-path="../../BasicKnowledge/多线程断点下载.html">
+            
+                <a href="../../BasicKnowledge/多线程断点下载.html">
+            
+                    
+                    多线程断点下载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.9" data-path="../../BasicKnowledge/黑名单挂断电话及删除电话记录.html">
+            
+                <a href="../../BasicKnowledge/黑名单挂断电话及删除电话记录.html">
+            
+                    
+                    黑名单挂断电话及删除电话记录
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.10" data-path="../../BasicKnowledge/横向ListView.html">
+            
+                <a href="../../BasicKnowledge/横向ListView.html">
+            
+                    
+                    横向ListView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.11" data-path="../../BasicKnowledge/滑动切换Activity GestureDetector.html">
+            
+                <a href="../../BasicKnowledge/滑动切换Activity GestureDetector.html">
+            
+                    
+                    滑动切换Activity(GestureDetector)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.12" data-path="../../BasicKnowledge/获取联系人.html">
+            
+                <a href="../../BasicKnowledge/获取联系人.html">
+            
+                    
+                    获取联系人
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.13" data-path="../../BasicKnowledge/获取手机及SD卡可用存储空间.html">
+            
+                <a href="../../BasicKnowledge/获取手机及SD卡可用存储空间.html">
+            
+                    
+                    获取手机及SD卡可用存储空间
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.14" data-path="../../BasicKnowledge/获取手机中所有安装的程序.html">
+            
+                <a href="../../BasicKnowledge/获取手机中所有安装的程序.html">
+            
+                    
+                    获取手机中所有安装的程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.15" data-path="../../BasicKnowledge/获取位置 LocationManager.html">
+            
+                <a href="../../BasicKnowledge/获取位置 LocationManager.html">
+            
+                    
+                    获取位置(LocationManager)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.16" data-path="../../BasicKnowledge/获取应用程序缓存及一键清理.html">
+            
+                <a href="../../BasicKnowledge/获取应用程序缓存及一键清理.html">
+            
+                    
+                    获取应用程序缓存及一键清理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.17" data-path="../../BasicKnowledge/开发中异常的处理.html">
+            
+                <a href="../../BasicKnowledge/开发中异常的处理.html">
+            
+                    
+                    开发中异常的处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.18" data-path="../../BasicKnowledge/开发中Log的管理.html">
+            
+                <a href="../../BasicKnowledge/开发中Log的管理.html">
+            
+                    
+                    开发中Log的管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.19" data-path="../../BasicKnowledge/快捷方式工具类.html">
+            
+                <a href="../../BasicKnowledge/快捷方式工具类.html">
+            
+                    
+                    快捷方式工具类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.20" data-path="../../BasicKnowledge/来电号码归属地提示框.html">
+            
+                <a href="../../BasicKnowledge/来电号码归属地提示框.html">
+            
+                    
+                    来电号码归属地提示框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.21" data-path="../../BasicKnowledge/来电监听及录音.html">
+            
+                <a href="../../BasicKnowledge/来电监听及录音.html">
+            
+                    
+                    来电监听及录音
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.22" data-path="../../BasicKnowledge/零权限上传数据.html">
+            
+                <a href="../../BasicKnowledge/零权限上传数据.html">
+            
+                    
+                    零权限上传数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.23" data-path="../../BasicKnowledge/内存泄漏.html">
+            
+                <a href="../../BasicKnowledge/内存泄漏.html">
+            
+                    
+                    内存泄漏
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.24" data-path="../../BasicKnowledge/屏幕适配.html">
+            
+                <a href="../../BasicKnowledge/屏幕适配.html">
+            
+                    
+                    屏幕适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.25" data-path="../../BasicKnowledge/任务管理器 ActivityManager.html">
+            
+                <a href="../../BasicKnowledge/任务管理器 ActivityManager.html">
+            
+                    
+                    任务管理器(ActivityManager)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.26" data-path="../../BasicKnowledge/手机摇晃.html">
+            
+                <a href="../../BasicKnowledge/手机摇晃.html">
+            
+                    
+                    手机摇晃
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.27" data-path="../../BasicKnowledge/竖着的Seekbar.html">
+            
+                <a href="../../BasicKnowledge/竖着的Seekbar.html">
+            
+                    
+                    竖着的Seekbar
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.28" data-path="../../BasicKnowledge/数据存储.html">
+            
+                <a href="../../BasicKnowledge/数据存储.html">
+            
+                    
+                    数据存储
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.29" data-path="../../BasicKnowledge/搜索框.html">
+            
+                <a href="../../BasicKnowledge/搜索框.html">
+            
+                    
+                    搜索框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.30" data-path="../../BasicKnowledge/锁屏以及解锁监听.html">
+            
+                <a href="../../BasicKnowledge/锁屏以及解锁监听.html">
+            
+                    
+                    锁屏以及解锁监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.31" data-path="../../BasicKnowledge/文件上传.html">
+            
+                <a href="../../BasicKnowledge/文件上传.html">
+            
+                    
+                    文件上传
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.32" data-path="../../BasicKnowledge/下拉刷新ListView.html">
+            
+                <a href="../../BasicKnowledge/下拉刷新ListView.html">
+            
+                    
+                    下拉刷新ListView
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.33" data-path="../../BasicKnowledge/修改系统组件样式.html">
+            
+                <a href="../../BasicKnowledge/修改系统组件样式.html">
+            
+                    
+                    修改系统组件样式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.34" data-path="../../BasicKnowledge/音量及屏幕亮度调节.html">
+            
+                <a href="../../BasicKnowledge/音量及屏幕亮度调节.html">
+            
+                    
+                    音量及屏幕亮度调节
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.35" data-path="../../BasicKnowledge/应用安装.html">
+            
+                <a href="../../BasicKnowledge/应用安装.html">
+            
+                    
+                    应用安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.36" data-path="../../BasicKnowledge/应用后台唤醒后数据的刷新.html">
+            
+                <a href="../../BasicKnowledge/应用后台唤醒后数据的刷新.html">
+            
+                    
+                    应用后台唤醒后数据的刷新
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.37" data-path="../../BasicKnowledge/知识大杂烩.html">
+            
+                <a href="../../BasicKnowledge/知识大杂烩.html">
+            
+                    
+                    知识大杂烩
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.38" data-path="../../BasicKnowledge/资源文件拷贝的三种方式.html">
+            
+                <a href="../../BasicKnowledge/资源文件拷贝的三种方式.html">
+            
+                    
+                    资源文件拷贝的三种方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.39" data-path="../../BasicKnowledge/自定义背景.html">
+            
+                <a href="../../BasicKnowledge/自定义背景.html">
+            
+                    
+                    自定义背景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.40" data-path="../../BasicKnowledge/自定义控件.html">
+            
+                <a href="../../BasicKnowledge/自定义控件.html">
+            
+                    
+                    自定义控件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.41" data-path="../../BasicKnowledge/自定义状态栏通知.html">
+            
+                <a href="../../BasicKnowledge/自定义状态栏通知.html">
+            
+                    
+                    自定义状态栏通知
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.42" data-path="../../BasicKnowledge/自定义Toast.html">
+            
+                <a href="../../BasicKnowledge/自定义Toast.html">
+            
+                    
+                    自定义Toast
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.43" data-path="../../BasicKnowledge/adb logcat使用简介.html">
+            
+                <a href="../../BasicKnowledge/adb logcat使用简介.html">
+            
+                    
+                    adb logcat使用简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.44" data-path="../../BasicKnowledge/Android入门介绍.html">
+            
+                <a href="../../BasicKnowledge/Android入门介绍.html">
+            
+                    
+                    Android入门介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.45" data-path="../../BasicKnowledge/Android编码规范.html">
+            
+                <a href="../../BasicKnowledge/Android编码规范.html">
+            
+                    
+                    Android编码规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.46" data-path="../../BasicKnowledge/Android动画.html">
+            
+                <a href="../../BasicKnowledge/Android动画.html">
+            
+                    
+                    Android动画
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.47" data-path="../../BasicKnowledge/Android四大组件之ContentProvider.html">
+            
+                <a href="../../BasicKnowledge/Android四大组件之ContentProvider.html">
+            
+                    
+                    Android四大组件之ContentProvider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.48" data-path="../../BasicKnowledge/Android四大组件之Service.html">
+            
+                <a href="../../BasicKnowledge/Android四大组件之Service.html">
+            
+                    
+                    Android四大组件之Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.49" data-path="../../BasicKnowledge/Android基础面试题.html">
+            
+                <a href="../../BasicKnowledge/Android基础面试题.html">
+            
+                    
+                    Android基础面试题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.50" data-path="../../BasicKnowledge/Ant打包.html">
+            
+                <a href="../../BasicKnowledge/Ant打包.html">
+            
+                    
+                    Ant打包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.51" data-path="../../BasicKnowledge/Bitmap优化.html">
+            
+                <a href="../../BasicKnowledge/Bitmap优化.html">
+            
+                    
+                    Bitmap优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.52" data-path="../../BasicKnowledge/Fragment专题.html">
+            
+                <a href="../../BasicKnowledge/Fragment专题.html">
+            
+                    
+                    Fragment专题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.53" data-path="../../BasicKnowledge/Home键监听.html">
+            
+                <a href="../../BasicKnowledge/Home键监听.html">
+            
+                    
+                    Home键监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.54" data-path="../../BasicKnowledge/HttpClient执行Get和Post请求.html">
+            
+                <a href="../../BasicKnowledge/HttpClient执行Get和Post请求.html">
+            
+                    
+                    HttpClient执行Get和Post请求
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.55" data-path="../../BasicKnowledge/JNI_C语言基础.html">
+            
+                <a href="../../BasicKnowledge/JNI_C语言基础.html">
+            
+                    
+                    JNI_C语言基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.56" data-path="../../BasicKnowledge/JNI基础.html">
+            
+                <a href="../../BasicKnowledge/JNI基础.html">
+            
+                    
+                    JNI基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.57" data-path="../../BasicKnowledge/ListView专题.html">
+            
+                <a href="../../BasicKnowledge/ListView专题.html">
+            
+                    
+                    ListView专题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.58" data-path="../../BasicKnowledge/Parcelable及Serializable.html">
+            
+                <a href="../../BasicKnowledge/Parcelable及Serializable.html">
+            
+                    
+                    Parcelable及Serializable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.59" data-path="../../BasicKnowledge/PopupWindow细节.html">
+            
+                <a href="../../BasicKnowledge/PopupWindow细节.html">
+            
+                    
+                    PopupWindow细节
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.60" data-path="../../BasicKnowledge/Scroller简介.html">
+            
+                <a href="../../BasicKnowledge/Scroller简介.html">
+            
+                    
+                    Scroller简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.61" data-path="../../BasicKnowledge/ScrollingTabs.html">
+            
+                <a href="../../BasicKnowledge/ScrollingTabs.html">
+            
+                    
+                    ScrollingTabs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.62" data-path="../../BasicKnowledge/SDK Manager无法更新的问题.html">
+            
+                <a href="../../BasicKnowledge/SDK Manager无法更新的问题.html">
+            
+                    
+                    SDK Manager无法更新的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.63" data-path="../../BasicKnowledge/Selector使用.html">
+            
+                <a href="../../BasicKnowledge/Selector使用.html">
+            
+                    
+                    Selector使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.64" data-path="../../BasicKnowledge/SlidingMenu.html">
+            
+                <a href="../../BasicKnowledge/SlidingMenu.html">
+            
+                    
+                    SlidingMenu
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.65" data-path="../../BasicKnowledge/String格式化.html">
+            
+                <a href="../../BasicKnowledge/String格式化.html">
+            
+                    
+                    String格式化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.66" data-path="../../BasicKnowledge/TextView跑马灯效果.html">
+            
+                <a href="../../BasicKnowledge/TextView跑马灯效果.html">
+            
+                    
+                    TextView跑马灯效果
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.67" data-path="../../BasicKnowledge/WebView总结.html">
+            
+                <a href="../../BasicKnowledge/WebView总结.html">
+            
+                    
+                    WebView总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.68" data-path="../../BasicKnowledge/Widget 窗口小部件.html">
+            
+                <a href="../../BasicKnowledge/Widget 窗口小部件.html">
+            
+                    
+                    Widget(窗口小部件)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.69" data-path="../../BasicKnowledge/Wifi状态监听.html">
+            
+                <a href="../../BasicKnowledge/Wifi状态监听.html">
+            
+                    
+                    Wifi状态监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.70" data-path="../../BasicKnowledge/XmlPullParser.html">
+            
+                <a href="../../BasicKnowledge/XmlPullParser.html">
+            
+                    
+                    XmlPullParser
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.71" data-path="../../BasicKnowledge/反编译.html">
+            
+                <a href="../../BasicKnowledge/反编译.html">
+            
+                    
+                    反编译
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >3. ExoPlayer源码分析之prepare方法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="3exoplayer&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;prepare&#x65B9;&#x6CD5;---">3.ExoPlayer&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;prepare&#x65B9;&#x6CD5;   </h2>
+<p>&#x4E0A;&#x9762;&#x4E24;&#x7BC7;&#x6587;&#x7AE0;&#x8BF4;&#x4E86;ExoPlayer&#x7B80;&#x5355;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x90FD;&#x662F;&#x4E9B;API&#xFF0C;&#x6CA1;&#x4EC0;&#x4E48;&#x7528;&#xFF0C;&#x67E5;&#x67E5;&#x6587;&#x6863;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;&#x6211;&#x4EEC;&#x8981;&#x53BB;&#x5B66;&#x4E60;ExoPlayer&#x6574;&#x4F53;&#x662F;&#x600E;&#x4E48;&#x8BBE;&#x8BA1;&#x7684;&#x3002;&#x4EE5;&#x4E0B;&#x57FA;&#x4E8E;2.10.6&#x7248;&#x672C;.     </p>
+<h3 id="&#x627E;&#x5165;&#x53E3;">&#x627E;&#x5165;&#x53E3;</h3>
+<p>&#x5206;&#x6790;&#x7684;&#x65F6;&#x5019;&#x9996;&#x5148;&#x8981;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x5207;&#x5165;&#x70B9;&#xFF0C;&#x4E0A;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#x5199;&#x4E86;&#x600E;&#x4E48;&#x53BB;&#x521B;&#x5EFA;&#x4F7F;&#x7528;&#xFF0C;&#x6211;&#x4EEC;&#x518D;&#x770B;&#x4E00;&#x904D;&#x4EE3;&#x7801;&#xFF0C;&#x5982;&#x4E0B;:    </p>
+<pre><code>View.inflate(context, R.layout.video_view, this)
+mPlayer = ExoPlayerFactory.newSimpleInstance(context)
+mPlayerView.player = mPlayer
+
+val uri = Uri.parse(url)
+val mediaSource = buildMediaSource(uri) //  ProgressiveMediaSource
+mPlayer.prepare(mediaSource)
+</code></pre><p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x770B;&#x51FA;&#x6765;&#x5176;&#x5B9E;&#x4E3B;&#x8981;&#x5C31;&#x662F;&#x4E09;&#x6B65;:   </p>
+<ol>
+<li>&#x901A;&#x8FC7;ExoPlayerFactory&#x521B;&#x5EFA;ExoPlayer&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;&#xFF0C;&#x5F53;&#x7136;&#x8FD9;&#x91CC;&#x521B;&#x5EFA;&#x7684;&#x662F;SimpleExoPlayer()    </li>
+<li>&#x5C06;&#x89C6;&#x9891;url&#x5C01;&#x88C5;&#x6210;MediaSource&#x7C7B;    </li>
+<li>&#x8C03;&#x7528;ExoPlayer.prepare()&#x65B9;&#x6CD5;&#xFF0C;&#x5E76;&#x5C06;MediaSource&#x7C7B;&#x5BF9;&#x8C61;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x5165;&#x3002;    </li>
+</ol>
+<p>&#x6211;&#x4EEC;&#x4E0B;&#x9762;&#x5206;&#x6790;&#x5C31;&#x53EA;&#x770B;&#x4E0A;&#x9762;&#x7684;1&#x548C;3&#x90E8;&#x5206;&#xFF0C;&#x56E0;&#x4E3A;2&#x6700;&#x7EC8;&#x4E5F;&#x662F;&#x901A;&#x8FC7;3&#x65B9;&#x6CD5;&#x7684;&#x53C2;&#x6570;&#x4F20;&#x5165;&#x7684;&#x3002;   </p>
+<h3 id="&#x7C7B;&#x56FE;">&#x7C7B;&#x56FE;</h3>
+<p>&#x5148;&#x770B;&#x4E00;&#x4E0B;<code>ExoPlayer</code>&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;:   </p>
+<pre><code>/**
+ * An extensible media player that plays MediaSources. Instances can be obtained from ExoPlayerFactory.
+ */
+public interface ExoPlayer extends Player {
+    void retry();
+    void prepare(MediaSource mediaSource);
+    PlayerMessage createMessage(PlayerMessage.Target target);
+}
+</code></pre><p>&#x5B83;&#x5B9E;&#x73B0;&#x4E86;Player&#x63A5;&#x53E3;:  </p>
+<pre><code>public interface Player {
+    interface AudioComponent
+    interface VideoComponent
+    interface TextComponent
+    interface MetadataComponent
+    interface MetadataComponent
+    interface EventListener
+    int STATE_IDLE = 1;
+    int STATE_BUFFERING = 2;
+    int STATE_READY = 3;
+    int STATE_ENDED = 4;
+    AudioComponent getAudioComponent();
+    VideoComponent getVideoComponent();
+    TextComponent getTextComponent();
+     MetadataComponent getMetadataComponent();
+     Looper getApplicationLooper();
+     void addListener(EventListener listener);
+     int getPlaybackState();
+     boolean isPlaying();
+     void setPlayWhenReady(boolean playWhenReady);
+     void setRepeatMode();
+     void setShuffleModeEnabled(boolean shuffleModeEnabled);
+     void seekTo(long positionMs);
+     void stop();
+     void release();
+     long getCurrentPosition();
+     long getCurrentPosition();
+}
+</code></pre><p>Player&#x63A5;&#x53E3;&#x6709;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;BasePlayer:     </p>
+<pre><code>/** Abstract base {@link Player} which implements common implementation independent methods. */
+public abstract class BasePlayer implements Player {
+
+}
+</code></pre><h3 id="exoplayer&#x521B;&#x5EFA;&#x90E8;&#x5206;">ExoPlayer&#x521B;&#x5EFA;&#x90E8;&#x5206;</h3>
+<p>&#x83B7;&#x53D6;ExoPlayer&#x5BF9;&#x8C61;&#x7684;&#x5B9E;&#x4F8B;&#x662F;&#x901A;&#x8FC7;ExoPlayerFactory&#x6765;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x9759;&#x6001;&#x7684;&#x65B9;&#x6CD5;:  </p>
+<pre><code>public static SimpleExoPlayer newSimpleInstance(Context context) {
+    return newSimpleInstance(context, new DefaultTrackSelector());
+}
+
+public static SimpleExoPlayer newSimpleInstance(Context context, TrackSelector trackSelector) {
+    return newSimpleInstance(context, new DefaultRenderersFactory(context), trackSelector);
+}
+
+public static SimpleExoPlayer newSimpleInstance(
+  Context context, RenderersFactory renderersFactory, TrackSelector trackSelector) {
+    return newSimpleInstance(context, renderersFactory, trackSelector, new DefaultLoadControl());
+}
+
+public static ExoPlayer newInstance(
+  Context context, Renderer[] renderers, TrackSelector trackSelector) {
+    return newInstance(context, renderers, trackSelector, new DefaultLoadControl());
+}
+</code></pre><p>&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x5DE5;&#x5382;&#x7C7B;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;SimpleExoPlayer&#x6216;&#x8005;ExoPlayer&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x4F8B;&#x3002;&#x6211;&#x4EEC;&#x4E0A;&#x9762;&#x662F;&#x901A;&#x8FC7;&#x8BE5;&#x5DE5;&#x5382;&#x7C7B;&#x7684;ExoPlayerFactory.newSimpleInstance(context)&#x6765;&#x83B7;&#x53D6;&#x7684;SimpleExoPlayer&#x3002;&#x800C;newSimpleInstance()&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x5982;&#x4E0B;:   </p>
+<pre><code>public static SimpleExoPlayer newSimpleInstance(
+      Context context,
+      RenderersFactory renderersFactory,
+      TrackSelector trackSelector,
+      LoadControl loadControl,
+      @Nullable DrmSessionManager&lt;FrameworkMediaCrypto&gt; drmSessionManager,
+      BandwidthMeter bandwidthMeter,
+      AnalyticsCollector.Factory analyticsCollectorFactory,
+      Looper looper) {
+    return new SimpleExoPlayer(
+        context,
+        renderersFactory,
+        trackSelector,
+        loadControl,
+        drmSessionManager,
+        bandwidthMeter,
+        analyticsCollectorFactory,
+        looper);
+}
+</code></pre><p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5B83;&#x6700;&#x540E;&#x8C03;&#x7528;&#x4E86;new SimpleExoPlayer&#xFF0C;&#x5E76;&#x4E14;&#x4F20;&#x5165;&#x4E86;&#x4E00;&#x4E9B;&#x53C2;&#x6570;&#xFF0C;&#x8FD9;&#x4E9B;&#x53C2;&#x6570;&#x4E3B;&#x8981;&#x6709;:   </p>
+<ul>
+<li>TrackSelector:&#x8F68;&#x9053;&#x63D0;&#x53D6;&#x5668;&#xFF0C;The component of an ExoPlayer responsible for selecting tracks to be consumed by each of the player&apos;s Renderers. The DefaultTrackSelector implementation should be suitable for most use cases.&#x4ECE;MediaSource&#x4E2D;&#x63D0;&#x53D6;&#x5404;&#x4E2A;&#x8F68;&#x9053;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x636E;&#xFF0C;&#x4EA4;&#x7ED9;Renderer&#x6E32;&#x67D3;&#xFF0C;&#x5B83;&#x6709;&#x4E2A;selectTracks()&#x65B9;&#x6CD5;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;TrackSelection&#x6570;&#x7EC4;&#xFF0C;TrackSelection&#x5C31;&#x662F;&#x5BF9;&#x8F68;&#x9053;&#x8FDB;&#x884C;&#x89E3;&#x6790;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x6709;&#x591A;&#x4E2A;&#x8F68;&#x9053;:&#x97F3;&#x9891;&#x8F68;&#x3001;&#x89C6;&#x9891;&#x8F68;&#x3001;&#x6587;&#x5B57;&#x8F68;&#x7B49;&#xFF0C;&#x6240;&#x4EE5;&#x4E5F;&#x9700;&#x8981;&#x591A;&#x4E2A;TrackSelection&#x3002;</li>
+<li>Renderer:&#x5BF9;&#x591A;&#x5A92;&#x4F53;&#x4E2D;&#x7684;&#x5404;&#x4E2A;&#x8F68;&#x9053;(&#x97F3;&#x8F68;&#x3001;&#x89C6;&#x9891;&#x8F68;&#x3001;&#x5B57;&#x6BCD;&#x8F68;&#x7B49;)&#x6570;&#x636E;&#x8FDB;&#x884C;&#x6E32;&#x67D3;&#xFF0C;&#x6E32;&#x67D3;&#x5C31;&#x662F;&quot;&#x64AD;&#x653E;&quot;&#xFF0C;&#x628A;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x6E32;&#x67D3;&#x6210;&#x58F0;&#x97F3;&#x3001;&#x753B;&#x9762;&#xFF0C;&#x521B;&#x5EFA;&#x64AD;&#x653E;&#x5668;&#x65F6;&#x4F20;&#x5165;&#x3002;
+RenderersFactory&#x7684;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x521B;&#x5EFA;Renderers&#xFF0C;&#x6BCF;&#x4E2A;&#x8D44;&#x6E90;&#x53EF;&#x80FD;&#x6709;&#x97F3;&#x9891;&#x3001;&#x89C6;&#x9891;&#x7B49;&#x591A;&#x4E2A;&#x8F68;&#x9053;&#xFF0C;&#x6BCF;&#x4E2A;Render&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x8F68;&#x9053;&#xFF0C;Renderer&#x5BF9;&#x5E94;&#x7684;&#x6709;VideoRender&#x3001;AudioRender&#x3001;TextRenderer&#x3001;MetadataRenderers&#x7B49;&#x7B49;</li>
+<li>LoadControl:&#x5BF9;MediaSource&#x8FDB;&#x884C;&#x63A7;&#x5236;&#xFF0C;&#x6BD4;&#x5982;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x5F00;&#x59CB;&#x7F13;&#x51B2;&#x3001;&#x7F13;&#x51B2;&#x591A;&#x5C11;&#x7B49; &#x4E3B;&#x8981;&#x662F;&#x8BB0;&#x5F55;&#x4E00;&#x4E9B;&#x4F4D;&#x7F6E;&#x3002;</li>
+<li>MediaSource:&#x5B9A;&#x4E49;&#x591A;&#x5A92;&#x4F53;&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x8FD9;&#x4E2A;&#x7C7B;&#x7684;&#x529F;&#x80FD;&#x5C31;&#x662F;&#x4ECE;Uri&#x4E2D;&#x8BFB;&#x53D6;&#x591A;&#x5A92;&#x4F53;&#x6587;&#x4EF6;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x636E;&#x3002;MediaSource&#x5728;&#x64AD;&#x653E;&#x5F00;&#x59CB;&#x65F6;&#x901A;&#x8FC7;ExoPlayer.prepare()&#x6CE8;&#x5165;&#xFF0C;&#x5B83;&#x6709;&#x4E00;&#x4E2A;&#x4E3B;&#x8981;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x662F;createPeriod()&#xFF0C;&#x7528;&#x6765;&#x521B;&#x5EFA;Period&#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x91CC;&#x9762;&#x4F1A;&#x771F;&#x6B63;&#x7684;&#x505A;&#x8D44;&#x6E90;&#x5904;&#x7406;&#x3002;</li>
+<li>Looper:&#x4E3A;&#x4E86;ExoPlayer&#x4E2D;&#x6D88;&#x606F;&#x7684;&#x5904;&#x7406;</li>
+<li>BandwidthMeter:&#x76D1;&#x63A7;&#x5F53;&#x524D;&#x7684;&#x5E26;&#x5BBD;&#x60C5;&#x51B5;</li>
+</ul>
+<p>&#x5B83;&#x4EEC;&#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#x662F;:   </p>
+<p>&#x6E32;&#x67D3;&#x5668;(Render)  ---&#x5237;&#x6570;&#x636E;---&gt;&#x63D0;&#x53D6;&#x5668;(Extraor) ----&#x8BFB;&#x53D6;&#x6570;&#x636E;---&gt; &#x52A0;&#x8F7D;&#x63A7;&#x5236;&#x5668;(LoadControl) ----&#x63A7;&#x5236;&#x6570;&#x636E;&#x52A0;&#x8F7D;&#x65B9;&#x5F0F;---&gt; &#x5A92;&#x4F53;&#x6E90;(MediaSource)</p>
+<p>&#x626F;&#x8FDC;&#x4E86;&#xFF0C;&#x7EE7;&#x7EED;&#x770B;SimpleExoPlayer&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;:     </p>
+<pre><code>public class SimpleExoPlayer extends BasePlayer
+    implements ExoPlayer,
+        Player.AudioComponent,
+        Player.VideoComponent,
+        Player.TextComponent,
+        Player.MetadataComponent {
+    private final ExoPlayerImpl player;
+    private final Handler eventHandler;
+
+    protected SimpleExoPlayer(
+          Context context,
+          RenderersFactory renderersFactory,
+          TrackSelector trackSelector, // &#x8F68;&#x9053;&#x63D0;&#x53D6;&#x5668;
+          LoadControl loadControl, // &#x52A0;&#x8F7D;&#x63A7;&#x5236;&#x5668;
+          @Nullable DrmSessionManager&lt;FrameworkMediaCrypto&gt; drmSessionManager,  // drm session&#x7BA1;&#x7406; &#x521A;&#x624D;&#x4F20;&#x7684;&#x662F;null
+          BandwidthMeter bandwidthMeter, // &#x5E26;&#x5BBD;&#x76D1;&#x6D4B;
+          AnalyticsCollector.Factory analyticsCollectorFactory, // &#x7528;&#x4E8E;&#x5206;&#x6790;
+          Clock clock, // &#x4F20;&#x7684;&#x662F;SystemClick&#xFF0C;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x7CFB;&#x7EDF;&#x65F6;&#x95F4;&#xFF0C;&#x4E3A;&#x4E86;&#x521B;&#x5EFA;HandlerWrapper
+          Looper looper) {
+        this.bandwidthMeter = bandwidthMeter;
+        componentListener = new ComponentListener();
+        videoListeners = new CopyOnWriteArraySet&lt;&gt;();
+        audioListeners = new CopyOnWriteArraySet&lt;&gt;();
+        textOutputs = new CopyOnWriteArraySet&lt;&gt;();
+        metadataOutputs = new CopyOnWriteArraySet&lt;&gt;();
+        videoDebugListeners = new CopyOnWriteArraySet&lt;&gt;();
+        audioDebugListeners = new CopyOnWriteArraySet&lt;&gt;();
+        eventHandler = new Handler(looper);
+        // &#x83B7;&#x53D6;Render&#x6765;&#x8FDB;&#x884C;&#x6E32;&#x67D3;
+        renderers =
+            renderersFactory.createRenderers(
+                eventHandler,
+                componentListener,
+                componentListener,
+                componentListener,
+                componentListener,
+                drmSessionManager);
+
+        // Set initial values.
+        audioVolume = 1;
+        audioSessionId = C.AUDIO_SESSION_ID_UNSET;
+        audioAttributes = AudioAttributes.DEFAULT;
+        videoScalingMode = C.VIDEO_SCALING_MODE_DEFAULT;
+        currentCues = Collections.emptyList();
+
+        // &#x521B;&#x5EFA;ExoPlayerImp&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x5E76;&#x5C06;render trackselector loadControl bandwidthmeter looper&#x7B49;&#x4F20;&#x5165;
+        // Build the player and associated objects.
+        player =
+            new ExoPlayerImpl(renderers, trackSelector, loadControl, bandwidthMeter, clock, looper);
+        analyticsCollector = analyticsCollectorFactory.createAnalyticsCollector(player, clock);
+        addListener(analyticsCollector);
+        addListener(componentListener);
+        videoDebugListeners.add(analyticsCollector);
+        videoListeners.add(analyticsCollector);
+        audioDebugListeners.add(analyticsCollector);
+        audioListeners.add(analyticsCollector);
+        addMetadataOutput(analyticsCollector);
+        bandwidthMeter.addEventListener(eventHandler, analyticsCollector);
+        if (drmSessionManager instanceof DefaultDrmSessionManager) {
+          ((DefaultDrmSessionManager) drmSessionManager).addListener(eventHandler, analyticsCollector);
+        }
+        audioFocusManager = new AudioFocusManager(context, componentListener);
+    }
+}
+</code></pre><p>&#x8BE5;&#x65B9;&#x6CD5;&#x91CC;&#x9762;&#x8C03;&#x7528;&#x4E86;new ExoPlayerImpl()&#xFF0C;&#x7EE7;&#x7EED;&#x770B;&#x4E00;&#x4E0B;ExoPlayerImpl&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;: </p>
+<pre><code>final class ExoPlayerImpl extends BasePlayer implements ExoPlayer {
+    public ExoPlayerImpl(
+      Renderer[] renderers,
+      TrackSelector trackSelector,
+      LoadControl loadControl,
+      BandwidthMeter bandwidthMeter,
+      Clock clock,
+      Looper looper) {
+    Log.i(TAG, &quot;Init &quot; + Integer.toHexString(System.identityHashCode(this)) + &quot; [&quot;
+        + ExoPlayerLibraryInfo.VERSION_SLASHY + &quot;] [&quot; + Util.DEVICE_DEBUG_INFO + &quot;]&quot;);
+    Assertions.checkState(renderers.length &gt; 0);
+    this.renderers = Assertions.checkNotNull(renderers);
+    this.trackSelector = Assertions.checkNotNull(trackSelector);
+    this.playWhenReady = false;
+    this.repeatMode = Player.REPEAT_MODE_OFF;
+    this.shuffleModeEnabled = false;
+    this.listeners = new CopyOnWriteArrayList&lt;&gt;();
+    emptyTrackSelectorResult =
+        new TrackSelectorResult(
+            new RendererConfiguration[renderers.length],
+            new TrackSelection[renderers.length],
+            null);
+    // &#x5A92;&#x4F53;&#x8D44;&#x6E90;&#x7684;&#x7247;&#x6BB5;&#xFF0C;TimeLine&#x548C;Period&#x90FD;&#x662F;&#x5A92;&#x4F53;&#x8D44;&#x6E90;&#x7247;&#x6BB5;&#x72B6;&#x6001;&#x76F8;&#x5173;&#x7684;        
+    period = new Timeline.Period();
+    // &#x64AD;&#x653E;&#x5668;&#x76F8;&#x5173;&#x53C2;&#x6570;&#xFF0C;default&#x662F;&#x9ED8;&#x8BA4;&#x7684;1&#x500D;&#x901F;
+    playbackParameters = PlaybackParameters.DEFAULT;
+    // seek&#x7684;&#x53C2;&#x6570;
+    seekParameters = SeekParameters.DEFAULT;
+    playbackSuppressionReason = PLAYBACK_SUPPRESSION_REASON_NONE;
+    // &#x901A;&#x8FC7;&#x4F20;&#x9012;&#x8FDB;&#x6765;&#x7684;looper&#x521B;&#x5EFA;eventHandler&#xFF0C;&#x5E76;&#x5C06;message&#x4EA4;&#x7ED9;ExoPlayerImpl.this.handleEvent&#x65B9;&#x6CD5;
+    eventHandler =
+        new Handler(looper) {
+          @Override
+          public void handleMessage(Message msg) {
+            ExoPlayerImpl.this.handleEvent(msg);
+          }
+        };
+    // &#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7A7A;&#x7684;&#x64AD;&#x653E;&#x5BF9;&#x8C61;&#x4FE1;&#x606F;&#xFF0C;&#x76F4;&#x5230;&#x5F00;&#x64AD;&#x7684;&#x65F6;&#x5019;&#x518D;&#x8D4B;&#x503C;
+    playbackInfo = PlaybackInfo.createDummy(/* startPositionUs= */ 0, emptyTrackSelectorResult);
+    pendingListenerNotifications = new ArrayDeque&lt;&gt;();
+    // &#x521B;&#x5EFA;ExoPlayerImplInternal&#x5BF9;&#x8C61;internalPlayer
+    internalPlayer =
+        new ExoPlayerImplInternal(
+            renderers,
+            trackSelector,
+            emptyTrackSelectorResult,
+            loadControl,
+            bandwidthMeter,
+            playWhenReady,
+            repeatMode,
+            shuffleModeEnabled,
+            eventHandler,
+            clock);
+    // &#x521B;&#x5EFA;internalPlayer&#x4F7F;&#x7528;&#x7684;handler        
+    internalPlayerHandler = new Handler(internalPlayer.getPlaybackLooper());
+    }
+
+}
+</code></pre><p>&#x91CC;&#x9762;&#x53C8;&#x521B;&#x5EFA;&#x4E86;ExoPlayerImplInternal&#xFF0C;&#x5E76;&#x628A;&#x90A3;&#x4E9B;&#x53C2;&#x6570;&#x5168;&#x90E8;&#x4F20;&#x9012;&#x5230;&#x8FD9;&#x91CC;&#x9762;&#x4E86;:   </p>
+<pre><code>public ExoPlayerImplInternal(
+      Renderer[] renderers,
+      TrackSelector trackSelector,
+      TrackSelectorResult emptyTrackSelectorResult,
+      LoadControl loadControl,
+      BandwidthMeter bandwidthMeter,
+      boolean playWhenReady,
+      @Player.RepeatMode int repeatMode,
+      boolean shuffleModeEnabled,
+      Handler eventHandler,
+      Clock clock) {
+    this.renderers = renderers;
+    this.trackSelector = trackSelector;
+    this.emptyTrackSelectorResult = emptyTrackSelectorResult;
+    this.loadControl = loadControl;
+    this.bandwidthMeter = bandwidthMeter;
+    this.playWhenReady = playWhenReady;
+    this.repeatMode = repeatMode;
+    this.shuffleModeEnabled = shuffleModeEnabled;
+    this.eventHandler = eventHandler;
+    this.clock = clock;
+    this.queue = new MediaPeriodQueue();
+
+    backBufferDurationUs = loadControl.getBackBufferDurationUs();
+    retainBackBufferFromKeyframe = loadControl.retainBackBufferFromKeyframe();
+
+    seekParameters = SeekParameters.DEFAULT;
+    playbackInfo =
+        PlaybackInfo.createDummy(/* startPositionUs= */ C.TIME_UNSET, emptyTrackSelectorResult);
+    playbackInfoUpdate = new PlaybackInfoUpdate();
+    rendererCapabilities = new RendererCapabilities[renderers.length];
+    for (int i = 0; i &lt; renderers.length; i++) {
+      renderers[i].setIndex(i);
+      rendererCapabilities[i] = renderers[i].getCapabilities();
+    }
+    mediaClock = new DefaultMediaClock(this, clock);
+    pendingMessages = new ArrayList&lt;&gt;();
+    enabledRenderers = new Renderer[0];
+    // Timeline&#x3001;Window&#x3001;Period&#x540E;&#x9762;&#x7684;&#x6587;&#x7AE0;&#x4F1A;&#x5355;&#x72EC;&#x8BB2;&#x4E00;&#x4E0B;
+    window = new Timeline.Window();
+    period = new Timeline.Period();
+    // &#x521D;&#x59CB;&#x5316;trackSelector
+    trackSelector.init(/* listener= */ this, bandwidthMeter);
+
+    // Note: The documentation for Process.THREAD_PRIORITY_AUDIO that states &quot;Applications can
+    // not normally change to this priority&quot; is incorrect.
+    internalPlaybackThread = new HandlerThread(&quot;ExoPlayerImplInternal:Handler&quot;,
+        Process.THREAD_PRIORITY_AUDIO);
+    // &#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#xFF0C;&#x51C6;&#x5907;&#x63A5;&#x53D7;&#x4EFB;&#x52A1;    
+    internalPlaybackThread.start();
+    // &#x8FD9;&#x4E2A;&#x5730;&#x65B9;&#x6BD4;&#x8F83;&#x5173;&#x952E;clock.createHandler&#x7684;&#x610F;&#x601D;&#x662F;&#x4F7F;&#x7528;&#x7279;&#x5B9A;&#x7684;looper&#x548C;&#x7279;&#x5B9A;callback&#x6765;&#x5904;&#x7406;&#x6D88;&#x606F;
+    // &#x800C;&#x8FD9;&#x91CC;&#x4F20;&#x7684;callback&#x662F;this&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x8FC7;&#x8BE5;handler&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x90FD;&#x4F1A;&#x4F20;&#x9012;&#x5230;ExoPlayerImplInternal&#x7C7B;&#x7684;handleMessage&#x65B9;&#x6CD5;
+    // clock&#x662F;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x7CFB;&#x7EDF;&#x65F6;&#x95F4;&#x7684;&#x7C7B;,&#x53C8;&#x901A;&#x8FC7;clock&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;ExoPlayerImplInternal&#x4F7F;&#x7528;&#x7684;handler
+    handler = clock.createHandler(internalPlaybackThread.getLooper(), this);
+  }
+</code></pre><p>&#x770B;&#x5230;&#x8FD9;&#x91CC;&#x5E94;&#x8BE5;&#x660E;&#x767D;&#x4E86;&#x5176;&#x5B9E;ExoPlayerImplInternal&#x624D;&#x662F;&#x6700;&#x7EC8;&#x5B9E;&#x73B0;&#x7684;&#x6838;&#x5FC3;&#x7C7B;&#x3002;<br>&#x5230;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4E0A;&#x9762;mPlayer = ExoPlayerFactory.newSimpleInstance(context)&#x7684;&#x90E8;&#x5206;&#x5DF2;&#x7ECF;&#x770B;&#x5B8C;&#x4E86;&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x5C31;&#x662F;mPlayer.prepare(concatenatingMediaSource). </p>
+<h3 id="exoplayerprepare&#x90E8;&#x5206;">ExoPlayer.prepare()&#x90E8;&#x5206;</h3>
+<p>&#x6211;&#x4EEC;&#x627E;&#x5230;SimpleExoPlayer.prepare()&#x65B9;&#x6CD5;:    </p>
+<pre><code>  @Override
+  public void prepare(MediaSource mediaSource) {
+    prepare(mediaSource, /* resetPosition= */ true, /* resetState= */ true);
+  }
+
+  @Override
+  public void prepare(MediaSource mediaSource, boolean resetPosition, boolean resetState) {
+    verifyApplicationThread();
+    if (this.mediaSource != null) {
+      this.mediaSource.removeEventListener(analyticsCollector);
+      analyticsCollector.resetForNewMediaSource();
+    }
+    this.mediaSource = mediaSource;
+    mediaSource.addEventListener(eventHandler, analyticsCollector);
+    @AudioFocusManager.PlayerCommand
+    int playerCommand = audioFocusManager.handlePrepare(getPlayWhenReady());
+    // &#x66F4;&#x65B0;&#x5F53;&#x524D;&#x662F;&#x5426;&#x662F;&#x51C6;&#x5907;&#x5B8C;&#x6210;&#x540E;&#x81EA;&#x52A8;&#x5F00;&#x59CB;&#x64AD;&#x653E;
+    updatePlayWhenReady(getPlayWhenReady(), playerCommand);
+    // player&#x662F;ExoPlayerImpl&#x5BF9;&#x8C61;
+    player.prepare(mediaSource, resetPosition, resetState);
+  }
+</code></pre><p>&#x6240;&#x4EE5;&#x8981;&#x7EE7;&#x7EED;&#x770B;ExoPlayerImpl.prepare()&#x65B9;&#x6CD5;:   </p>
+<pre><code>  @Override
+  public void prepare(MediaSource mediaSource, boolean resetPosition, boolean resetState) {
+    playbackError = null;
+    this.mediaSource = mediaSource;
+    PlaybackInfo playbackInfo =
+        getResetPlaybackInfo(
+            resetPosition, resetState, /* playbackState= */ Player.STATE_BUFFERING);
+    // Trigger internal prepare first before updating the playback info and notifying external
+    // listeners to ensure that new operations issued in the listener notifications reach the
+    // player after this prepare. The internal player can&apos;t change the playback info immediately
+    // because it uses a callback.
+    hasPendingPrepare = true;
+    pendingOperationAcks++;
+    // &#x8C03;&#x7528;&#x4E86;ExoPlayerImplInternal&#x7684;prepare&#x65B9;&#x6CD5;
+    internalPlayer.prepare(mediaSource, resetPosition, resetState);
+    updatePlaybackInfo(
+        playbackInfo,
+        /* positionDiscontinuity= */ false,
+        /* ignored */ DISCONTINUITY_REASON_INTERNAL,
+        TIMELINE_CHANGE_REASON_RESET,
+        /* seekProcessed= */ false);
+  }
+</code></pre><p>&#x6240;&#x4EE5;&#x8981;&#x7EE7;&#x7EED;&#x518D;&#x770B;ExoPlayerImplInternal&#x7684;prepare&#x65B9;&#x6CD5;:   </p>
+<pre><code>  public void prepare(MediaSource mediaSource, boolean resetPosition, boolean resetState) {
+    // &#x8C03;&#x7528;handler.sendMessage&#xFF0C;&#x4E0A;&#x9762;&#x5728;handler&#x521D;&#x59CB;&#x5316;&#x7684;&#x65F6;&#x5019;&#x8BF4;&#x8FC7;&#xFF0C;&#x8BE5;handler&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x4F1A;&#x8D70;&#x5230;&#x8BE5;&#x7C7B;&#x7684;handleMessage&#x65B9;&#x6CD5;&#x3002;
+    handler
+        .obtainMessage(MSG_PREPARE, resetPosition ? 1 : 0, resetState ? 1 : 0, mediaSource)
+        .sendToTarget();
+  }
+</code></pre><p>&#x6240;&#x4EE5;&#x63A5;&#x4E0B;&#x6765;&#x8981;&#x7EE7;&#x7EED;&#x770B;&#x4E00;&#x4E0B;ExoPlayerImplInternal.handleMessage()&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6BD4;&#x8F83;&#x591A;&#xFF0C;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x53EA;&#x8981;&#x770B;MSG_PREPARE&#x90E8;&#x5206;:    </p>
+<pre><code>  public boolean handleMessage(Message msg) {
+    try {
+      switch (msg.what) {
+        case MSG_PREPARE:
+        // &#x901A;&#x8FC7;msg&#x53D6;&#x51FA;MediaSource&#x5BF9;&#x8C61;&#x5E76;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x8C03;&#x7528;prepareInternal()&#x65B9;&#x6CD5;
+          prepareInternal(
+              (MediaSource) msg.obj,
+              /* resetPosition= */ msg.arg1 != 0,
+              /* resetState= */ msg.arg2 != 0);
+          break;
+        case MSG_SET_PLAY_WHEN_READY:
+          setPlayWhenReadyInternal(msg.arg1 != 0);
+          break;
+        case MSG_SET_REPEAT_MODE:
+          setRepeatModeInternal(msg.arg1);
+          break;
+        case MSG_SET_SHUFFLE_ENABLED:
+          setShuffleModeEnabledInternal(msg.arg1 != 0);
+          break;
+        case MSG_DO_SOME_WORK:
+          doSomeWork();
+          break;
+        ..........
+  }
+</code></pre><p>&#x91CC;&#x9762;&#x8C03;&#x7528;&#x4E86;prepareInternal()&#x65B9;&#x6CD5;:   </p>
+<pre><code>private void prepareInternal(MediaSource mediaSource, boolean resetPosition, boolean resetState) {
+    pendingPrepareCount++;
+    // &#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x662F;&#x505A;&#x4E00;&#x4E9B;&#x8D44;&#x6E90;&#x7684;&#x91CA;&#x653E;&#x521D;&#x59CB;&#x5316;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x79FB;&#x9664;MSG_DO_SOME_WORK&#x6D88;&#x606F;&#xFF0C;&#x7136;&#x540E;&#x91CD;&#x7F6E;Render&#xFF0C;&#x628A;&#x4E4B;&#x524D;&#x7684;MediaSource&#x91CA;&#x653E;&#x7B49;
+    resetInternal(
+        /* resetRenderers= */ false, /* releaseMediaSource= */ true, resetPosition, resetState);
+    // onPrepared&#x65B9;&#x6CD5;&#x5185;&#x90E8;&#x53EA;&#x662F;reset&#x4E86;
+    loadControl.onPrepared();
+    this.mediaSource = mediaSource;
+    // &#x66F4;&#x65B0;&#x5F53;&#x524D;&#x7684;&#x72B6;&#x6001;&#x5230;buffering
+    setState(Player.STATE_BUFFERING);
+    // &#x5F00;&#x59CB;&#x8D44;&#x6E90;&#x51C6;&#x5907;&#xFF0C;&#x5E76;&#x4E14;&#x6DFB;&#x52A0;&#x5BF9;&#x5E94;&#x7684;&#x76D1;&#x542C;, &#x5177;&#x4F53;MediaSource&#x91CC;&#x9762;&#x600E;&#x4E48;&#x53BB;&#x5B9E;&#x73B0;&#x7684;prepareSource&#xFF0C;&#x7B49;&#x6211;&#x4EEC;&#x8BB2;&#x5B8C;doSomeWork&#x540E;&#x518D;&#x8BF4;
+    mediaSource.prepareSource(/* listener= */ this, bandwidthMeter.getTransferListener());
+    // &#x53C8;&#x53D1;&#x9001;&#x4E86;MSG_DO_SOME_WORK
+    handler.sendEmptyMessage(MSG_DO_SOME_WORK);
+}
+</code></pre><p>&#x8FD9;&#x91CC;&#x53C8;&#x662F;&#x4E24;&#x90E8;&#x5206;:   </p>
+<ul>
+<li>mediaSource.prepareSource()&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x662F;&#x5173;&#x4E8E;MediaSource&#x4F5C;&#x7528;&#x7684;&#x90E8;&#x5206;</li>
+<li>&#x53D1;&#x9001;MSG_DO_SOME_WORK&#x7684;&#x6D88;&#x606F;</li>
+</ul>
+<h4 id="mediasourcepreparesource">MediaSource.prepareSource()</h4>
+<p>&#x5728;&#x770B;&#x4E4B;&#x524D;&#x6709;&#x5FC5;&#x8981;&#x5148;&#x770B;&#x4E00;&#x4E0B;MediaSource&#x63A5;&#x53E3;:   </p>
+<pre><code>Defines and provides media to be played by an ExoPlayer. A MediaSource has two main responsibilities:
+To provide the player with a Timeline defining the structure of its media, and to provide a new timeline whenever the structure of the media changes. The MediaSource provides these timelines by calling MediaSource.SourceInfoRefreshListener.onSourceInfoRefreshed on the MediaSource.SourceInfoRefreshListeners passed to prepareSource(MediaSource.SourceInfoRefreshListener, TransferListener).
+To provide MediaPeriod instances for the periods in its timeline. MediaPeriods are obtained by calling createPeriod(MediaSource.MediaPeriodId, Allocator, long), and provide a way for the player to load and read the media.
+</code></pre><p>&#x5927;&#x4F53;&#x7684;&#x610F;&#x601D;&#x5C31;&#x662F;&#x4E00;&#x4E2A;MediaSource&#x8981;&#x6709;&#x4E24;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x804C;&#x8D23;:    </p>
+<ul>
+<li>&#x5C06;&#x4E00;&#x4E2A;&#x5B9A;&#x4E49;&#x5A92;&#x4F53;&#x7ED3;&#x6784;&#x7684;Timeline&#x5BF9;&#x8C61;&#x63D0;&#x4F9B;&#x7ED9;player&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x5A92;&#x4F53;&#x53D8;&#x5316;&#x7684;&#x65F6;&#x5019;&#x53BB;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x65B0;&#x7684;Timeline&#x5BF9;&#x8C61;</li>
+<li>&#x5BF9;Timeline&#x4E2D;&#x7684;&#x5A92;&#x4F53;&#x7247;&#x6BB5;&#x63D0;&#x4F9B;MediaPeriod&#x5BF9;&#x8C61;&#xFF0C;player&#x901A;&#x8FC7;MediaPeriod&#x4E2D;&#x63D0;&#x4F9B;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x8BFB;&#x53D6;&#x5A92;&#x4F53;&#x6570;&#x636E;</li>
+</ul>
+<p>&#x7EE7;&#x7EED;&#x770B;&#x4E00;&#x4E0B;mediaSource.prepareSource()&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x7684;&#x5B9E;&#x73B0;&#x662F;&#x5728;BaseMediaSource&#x7C7B;&#x4E2D;&#x7684;:     </p>
+<pre><code>public final void prepareSource(
+      SourceInfoRefreshListener listener,
+      @Nullable TransferListener mediaTransferListener) {
+    Looper looper = Looper.myLooper();
+    Assertions.checkArgument(this.looper == null || this.looper == looper);
+    sourceInfoListeners.add(listener);
+    if (this.looper == null) {
+      this.looper = looper;
+      // &#x5F00;&#x59CB;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x8C03;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;
+      prepareSourceInternal(mediaTransferListener);
+    } else if (timeline != null) {
+      listener.onSourceInfoRefreshed(/* source= */ this, timeline, manifest);
+    }
+}
+</code></pre><p>&#x7EE7;&#x7EED;&#x770B;prepareSourceInternal()&#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x662F;&#x5B50;&#x7C7B;&#x53BB;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x7528;&#x666E;&#x901A;&#x89C6;&#x9891;&#x683C;&#x5F0F;&#x7684;ProgressiveMediaSource&#x7C7B;&#x6765;&#x770B;:   </p>
+<pre><code>public void prepareSourceInternal(@Nullable TransferListener mediaTransferListener) {
+    transferListener = mediaTransferListener;
+    notifySourceInfoRefreshed(timelineDurationUs, timelineIsSeekable);
+}
+
+private void notifySourceInfoRefreshed(long durationUs, boolean isSeekable) {
+    timelineDurationUs = durationUs;
+    timelineIsSeekable = isSeekable;
+    // TODO: Make timeline dynamic until its duration is known. This is non-trivial. See b/69703223.
+    refreshSourceInfo(
+        new SinglePeriodTimeline(
+            timelineDurationUs, timelineIsSeekable, /* isDynamic= */ false, tag),
+        /* manifest= */ null);
+}
+
+protected final void refreshSourceInfo(Timeline timeline, @Nullable Object manifest) {
+    this.timeline = timeline;
+    this.manifest = manifest;
+    for (SourceInfoRefreshListener listener : sourceInfoListeners) {
+      listener.onSourceInfoRefreshed(/* source= */ this, timeline, manifest);
+    }
+ }
+</code></pre><p>&#x800C;&#x8FD9;&#x91CC;&#x7684;listener&#x662F;&#x8C01;&#x5462;&#xFF1F; &#x662F;ExoPlayerImplInternal&#xFF0C;&#x7EE7;&#x7EED;&#x770B;ExoPlayerImplInternal.onSourceInfoRefreshed()&#x65B9;&#x6CD5;:  </p>
+<pre><code>public void onSourceInfoRefreshed(MediaSource source, Timeline timeline, Object manifest) {
+    handler.obtainMessage(MSG_REFRESH_SOURCE_INFO,
+        new MediaSourceRefreshInfo(source, timeline, manifest)).sendToTarget();
+  }
+</code></pre><p>&#x63A5;&#x7740;&#x5C31;&#x662F;&#x53D1;&#x9001;MSG_REFRESH_SOURCE_INFO&#x6D88;&#x606F;&#xFF0C;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5230;handleMessage()&#x4E2D;&#x770B;&#x4E00;&#x4E0B;:   </p>
+<pre><code>  public boolean handleMessage(Message msg) {
+    try {
+      switch (msg.what) {
+        case MSG_PREPARE:
+          prepareInternal(
+              (MediaSource) msg.obj,
+              /* resetPosition= */ msg.arg1 != 0,
+              /* resetState= */ msg.arg2 != 0);
+          break;
+          case MSG_REFRESH_SOURCE_INFO:
+          handleSourceInfoRefreshed((MediaSourceRefreshInfo) msg.obj);
+          break;
+          ....
+      }
+  }
+}
+</code></pre><p>Message&#x53D1;&#x9001;&#x8FC7;&#x6765;&#x7684;&#x662F;MediaSourceRefreshInfo&#x5BF9;&#x8C61;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x5176;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x7ED9;handleSourceInfoRefreshed()&#x65B9;&#x6CD5;&#xFF0C;&#x91CC;&#x9762;&#x903B;&#x8F91;&#x592A;&#x591A;&#x4E86;&#xFF0C;&#x5927;&#x4F53;&#x90FD;&#x662F;&#x4E00;&#x4E9B;&#x66F4;&#x65B0;&#x64AD;&#x653E;&#x4FE1;&#x606F;&#x548C;&#x72B6;&#x6001;&#x7684;&#x64CD;&#x4F5C;&#x3002;</p>
+<h4 id="msgdosomework&#x6D88;&#x606F;">MSG_DO_SOME_WORK&#x6D88;&#x606F;</h4>
+<p>handleMessage&#x65B9;&#x6CD5;&#x4E2D;&#x5728;&#x6536;&#x5230;MSG_DO_SOME_WORK&#x540E;&#x8C03;&#x7528;&#x4E86;doSomeWork()&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x4E00;&#x4E0B;&#x4ED6;&#x91CC;&#x9762;&#x7684;&#x5B9E;&#x73B0;:    </p>
+<pre><code>private void doSomeWork() throws ExoPlaybackException, IOException {
+    // &#x83B7;&#x53D6;&#x7CFB;&#x7EDF;&#x65F6;&#x95F4;
+    long operationStartTimeMs = clock.uptimeMillis();
+    // &#x901A;&#x8FC7;MediaPeriodQueue&#x66F4;&#x65B0;&#x5A92;&#x4F53;&#x6587;&#x4EF6;&#x7684;&#x7247;&#x6BB5;&#xFF0C;&#x91CC;&#x9762;&#x4F1A;&#x53BB;prepare&#x4E0B;&#x4E00;&#x4E2A;&#x7247;&#x6BB5;
+    updatePeriods();
+    if (!queue.hasPlayingPeriod()) {
+      // We&apos;re still waiting for the first period to be prepared.
+      maybeThrowPeriodPrepareError();
+      scheduleNextWork(operationStartTimeMs, PREPARING_SOURCE_INTERVAL_MS);
+      return;
+    }
+    // &#x83B7;&#x53D6;&#x5F53;&#x524D;&#x64AD;&#x653E;&#x5668;&#x7684;&#x5A92;&#x4F53;&#x7247;&#x6BB5;
+    MediaPeriodHolder playingPeriodHolder = queue.getPlayingPeriod();
+
+    TraceUtil.beginSection(&quot;doSomeWork&quot;);
+    // &#x66F4;&#x65B0;&#x64AD;&#x653E;&#x4F4D;&#x7F6E;
+    updatePlaybackPositions();
+    long rendererPositionElapsedRealtimeUs = SystemClock.elapsedRealtime() * 1000;
+
+    playingPeriodHolder.mediaPeriod.discardBuffer(playbackInfo.positionUs - backBufferDurationUs,
+        retainBackBufferFromKeyframe);
+
+    boolean renderersEnded = true;
+    boolean renderersReadyOrEnded = true;
+    // renderers&#x4F1A;&#x6BD4;&#x8F83;&#x591A;&#xFF0C;&#x6709;&#x97F3;&#x9891;&#x3001;&#x89C6;&#x9891;&#x3001;&#x6587;&#x672C;&#xFF0C;Renderer&#x63A5;&#x53E3;&#x6709;&#x597D;&#x51E0;&#x4E2A;&#x5B9E;&#x73B0;&#x7C7B;
+    for (Renderer renderer : enabledRenderers) {
+      // TODO: Each renderer should return the maximum delay before which it wishes to be called
+      // again. The minimum of these values should then be used as the delay before the next
+      // invocation of this method.
+      // &#x5F00;&#x59CB;&#x8BA9;Renderer&#x8FDB;&#x5165;&#x51C6;&#x5907;&#x72B6;&#x6001;
+      renderer.render(rendererPositionUs, rendererPositionElapsedRealtimeUs);
+      renderersEnded = renderersEnded &amp;&amp; renderer.isEnded();
+      // Determine whether the renderer is ready (or ended). We override to assume the renderer is
+      // ready if it needs the next sample stream. This is necessary to avoid getting stuck if
+      // tracks in the current period have uneven durations. See:
+      // https://github.com/google/ExoPlayer/issues/1874
+      boolean rendererReadyOrEnded = renderer.isReady() || renderer.isEnded()
+          || rendererWaitingForNextStream(renderer);
+      if (!rendererReadyOrEnded) {
+        renderer.maybeThrowStreamError();
+      }
+      renderersReadyOrEnded = renderersReadyOrEnded &amp;&amp; rendererReadyOrEnded;
+    }
+    if (!renderersReadyOrEnded) {
+      maybeThrowPeriodPrepareError();
+    }
+
+    long playingPeriodDurationUs = playingPeriodHolder.info.durationUs;
+    if (renderersEnded
+        &amp;&amp; (playingPeriodDurationUs == C.TIME_UNSET
+            || playingPeriodDurationUs &lt;= playbackInfo.positionUs)
+        &amp;&amp; playingPeriodHolder.info.isFinal) {
+      setState(Player.STATE_ENDED);
+      stopRenderers();
+    } else if (playbackInfo.playbackState == Player.STATE_BUFFERING
+        &amp;&amp; shouldTransitionToReadyState(renderersReadyOrEnded)) {
+      setState(Player.STATE_READY);
+      // prepare&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x8D70;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x5982;&#x679C;prepared&#x5B8C;&#x6210;&#x9700;&#x8981;&#x81EA;&#x52A8;&#x64AD;&#x653E;&#x5E76;&#x4E14;&#x6240;&#x6709;Renderer&#x76EE;&#x524D;&#x90FD;&#x5DF2;&#x7ECF;&#x662F;&#x51C6;&#x5907;&#x597D;&#x7684;&#x72B6;&#x6001;&#x90A3;&#x5C31;&#x4F1A;&#x5F00;&#x59CB;&#x6E32;&#x67D3;&#x7684;&#x529F;&#x80FD;
+      if (playWhenReady) {
+        startRenderers();
+      }
+    } else if (playbackInfo.playbackState == Player.STATE_READY
+        &amp;&amp; !(enabledRenderers.length == 0 ? isTimelineReady() : renderersReadyOrEnded)) {
+      rebuffering = playWhenReady;
+      setState(Player.STATE_BUFFERING);
+      stopRenderers();
+    }
+
+    if (playbackInfo.playbackState == Player.STATE_BUFFERING) {
+      for (Renderer renderer : enabledRenderers) {
+        renderer.maybeThrowStreamError();
+      }
+    }
+
+    if ((playWhenReady &amp;&amp; playbackInfo.playbackState == Player.STATE_READY)
+        || playbackInfo.playbackState == Player.STATE_BUFFERING) {
+      // &#x53D1;&#x9001;&#x4E0B;&#x4E00;&#x4E2A;MSG_DO_SOME_WORK&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x8FD9;&#x6837;&#x6765;&#x8FBE;&#x5230;&#x5FAA;&#x73AF;
+      scheduleNextWork(operationStartTimeMs, RENDERING_INTERVAL_MS);
+    } else if (enabledRenderers.length != 0 &amp;&amp; playbackInfo.playbackState != Player.STATE_ENDED) {
+      scheduleNextWork(operationStartTimeMs, IDLE_INTERVAL_MS);
+    } else {
+      handler.removeMessages(MSG_DO_SOME_WORK);
+    }
+
+    TraceUtil.endSection();
+}
+</code></pre><p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;doSomeWork()&#x65B9;&#x6CD5;&#x4F1A;&#x4E0D;&#x65AD;&#x7684;&#x53BB;&#x7ED8;&#x5236;&#xFF0C;&#x7136;&#x540E;&#x6BCF;&#x6B21;&#x7ED8;&#x5236;&#x5B8C;&#x4E00;&#x90E8;&#x5206;&#x5C31;&#x4F1A;&#x7EE7;&#x7EED;&#x5FAA;&#x73AF;&#x8C03;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#x53BB;&#x7ED8;&#x5236;&#x4E0B;&#x4E00;&#x4E2A;&#x5A92;&#x4F53;&#x7247;&#x6BB5;&#x3002;&#x4E0A;&#x9762;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6838;&#x5FC3;&#x529F;&#x80FD;&#x5728;updatePeriods()&#x65B9;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7;&#x5FAA;&#x73AF;&#x6765;&#x4E0D;&#x65AD;&#x7684;&#x53BB;&#x52A0;&#x8F7D;&#x4E0B;&#x4E00;&#x4E2A;&#x5A92;&#x4F53;&#x7247;&#x6BB5;&#xFF0C;&#x6765;&#x8FBE;&#x5230;&#x64AD;&#x653E;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x6240;&#x4EE5;&#x63A5;&#x4E0B;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x8BE5;&#x65B9;&#x6CD5;:   </p>
+<pre><code>  private void updatePeriods() throws ExoPlaybackException, IOException {
+    if (mediaSource == null) {
+      // The player has no media source yet.
+      return;
+    }
+    if (pendingPrepareCount &gt; 0) {
+      // We&apos;re waiting to get information about periods.
+      mediaSource.maybeThrowSourceInfoRefreshError();
+      return;
+    }
+
+    // Update the loading period if required.
+    // &#x4E0B;&#x9762;&#x4F1A;&#x770B;&#x8BE5;&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x53BB;&#x5C1D;&#x8BD5;&#x52A0;&#x8F7D;&#x4E0B;&#x4E00;&#x4E2A;&#x5A92;&#x4F53;&#x7247;&#x6BB5;
+    maybeUpdateLoadingPeriod();
+
+    MediaPeriodHolder loadingPeriodHolder = queue.getLoadingPeriod();
+    if (loadingPeriodHolder == null || loadingPeriodHolder.isFullyBuffered()) {
+      setIsLoading(false);
+    } else if (!playbackInfo.isLoading) {
+      maybeContinueLoading();
+    }
+
+    if (!queue.hasPlayingPeriod()) {
+      // We&apos;re waiting for the first period to be prepared.
+      return;
+    }
+
+    // Advance the playing period if necessary.
+    MediaPeriodHolder playingPeriodHolder = queue.getPlayingPeriod();
+    MediaPeriodHolder readingPeriodHolder = queue.getReadingPeriod();
+    boolean advancedPlayingPeriod = false;
+    // &#x5982;&#x679C;prepare&#x5B8C;&#x6210;&#x540E;&#x9700;&#x8981;&#x5F00;&#x59CB;&#x64AD;&#x653E;&#x7684;&#x8BDD;
+    while (playWhenReady
+        &amp;&amp; playingPeriodHolder != readingPeriodHolder
+        &amp;&amp; rendererPositionUs &gt;= playingPeriodHolder.getNext().getStartPositionRendererTime()) {
+      // All enabled renderers&apos; streams have been read to the end, and the playback position reached
+      // the end of the playing period, so advance playback to the next period.
+      if (advancedPlayingPeriod) {
+        // If we advance more than one period at a time, notify listeners after each update.
+        maybeNotifyPlaybackInfoChanged();
+      }
+      int discontinuityReason =
+          playingPeriodHolder.info.isLastInTimelinePeriod
+              ? Player.DISCONTINUITY_REASON_PERIOD_TRANSITION
+              : Player.DISCONTINUITY_REASON_AD_INSERTION;
+      MediaPeriodHolder oldPlayingPeriodHolder = playingPeriodHolder;
+      // advancePlayingPeriod()&#x65B9;&#x6CD5;&#x5185;&#x90E8;&#x4F1A;&#x53BB;&#x8BBE;&#x7F6E;queue&#x4E2D;&#x8981;&#x64AD;&#x653E;&#x7684;playingPeroidHolder
+      // &#x8FD9;&#x91CC;&#x5BF9;&#x4E8E;MediaPeriodQueue&#x6709;&#x5FC5;&#x8981;&#x8BF4;&#x4E00;&#x4E0B;&#xFF0C;&#x5B83;&#x91CC;&#x9762;&#x6709;&#x4E09;&#x4E2A;MediaPeriodHolder&#x5BF9;&#x8C61;&#xFF0C;&#x5206;&#x522B;&#x662F;
+      // playingMediaPeriodHolder&#x3001;readingMediaPeriodHolder&#x3001;loadingMediaPeriodHolder
+      playingPeriodHolder = queue.advancePlayingPeriod();
+      // &#x8C03;&#x7528;enableRenderers()&#x65B9;&#x6CD5;&#xFF0C;&#x7136;&#x540E;&#x5F00;&#x59CB;&#x6E32;&#x67D3;
+      updatePlayingPeriodRenderers(oldPlayingPeriodHolder);
+      playbackInfo =
+          playbackInfo.copyWithNewPosition(
+              playingPeriodHolder.info.id,
+              playingPeriodHolder.info.startPositionUs,
+              playingPeriodHolder.info.contentPositionUs,
+              getTotalBufferedDurationUs());
+      playbackInfoUpdate.setPositionDiscontinuity(discontinuityReason);
+      updatePlaybackPositions();
+      advancedPlayingPeriod = true;
+    }
+    ........
+  }
+</code></pre><p>maybeUpdateLoadingPeriod()&#x662F;&#x7528;&#x6765;&#x68C0;&#x6D4B;&#x662F;&#x5426;&#x52A0;&#x8F7D;&#x4E0B;&#x4E00;&#x4E2A;&#x5A92;&#x4F53;&#x7247;&#x6BB5;&#x7684;:   </p>
+<pre><code>private void maybeUpdateLoadingPeriod() throws IOException {
+    // &#x5982;&#x679C;&#x73B0;&#x5728;&#x6709;&#x4E00;&#x4E2A;&#x6B63;&#x5728;loading&#x7684;&#x7247;&#x6BB5;&#xFF0C;&#x4F1A;&#x91CD;&#x65B0;&#x53BB;&#x8BC4;&#x4F30;
+    queue.reevaluateBuffer(rendererPositionUs);
+    // &#x68C0;&#x67E5;&#x662F;&#x5426;&#x9700;&#x8981;&#x52A0;&#x8F7D;&#x4E0B;&#x4E00;&#x4E2A;&#x5A92;&#x4F53;&#x7247;&#x6BB5;
+    if (queue.shouldLoadNextMediaPeriod()) {
+      // &#x83B7;&#x53D6;&#x4E0B;&#x4E00;&#x4E2A;&#x5A92;&#x4F53;&#x7247;&#x6BB5;&#x4FE1;&#x606F;
+      MediaPeriodInfo info = queue.getNextMediaPeriodInfo(rendererPositionUs, playbackInfo);
+      if (info == null) {
+        maybeThrowSourceInfoRefreshError();
+      } else {
+        // 1. &#x8C03;&#x7528;&#x4E86;MediaPeriodQueue.enqueueNextMediaPeriod()&#x65B9;&#x6CD5;
+        MediaPeriod mediaPeriod =
+            queue.enqueueNextMediaPeriod(
+                rendererCapabilities,
+                trackSelector,
+                loadControl.getAllocator(),
+                mediaSource,
+                info);
+        // 2. &#x8C03;&#x7528;&#x4E0B;&#x4E00;&#x4E2A;&#x5A92;&#x4F53;&#x7247;&#x6BB5;&#x7684;prepare&#x65B9;&#x6CD5;&#x3002;MediaPeriod&#x63A5;&#x53E3;&#x6709;&#x5F88;&#x591A;&#x5B9E;&#x73B0;&#x7C7B;&#xFF0C;&#x4F8B;&#x5982;DASH&#x3001;HLS&#x7B49;
+        // &#x6240;&#x4EE5;&#x6BCF;&#x4E2A;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x5B83;&#x7684;prepare&#x65B9;&#x6CD5;&#x90FD;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;        
+        mediaPeriod.prepare(this, info.startPositionUs);
+        setIsLoading(true);
+        // &#x66F4;&#x65B0;&#x72B6;&#x6001;
+        handleLoadingMediaPeriodChanged(/* loadingTrackSelectionChanged= */ false);
+      }
+    }
+  }
+</code></pre><p>&#x4E0A;&#x9762;&#x53C8;&#x5206;&#x4E86;&#x4E24;&#x90E8;&#x5206;:  </p>
+<ul>
+<li>&#x83B7;&#x53D6;MediaPeriod</li>
+<li>&#x8C03;&#x7528;MediaPeriod.prepare&#x65B9;&#x6CD5;</li>
+</ul>
+<h4 id="&#x5148;&#x770B;&#x83B7;&#x53D6;mediaperiod&#x7684;&#x90E8;&#x5206;">&#x5148;&#x770B;&#x83B7;&#x53D6;MediaPeriod&#x7684;&#x90E8;&#x5206;</h4>
+<p>MediaPeriodQueue.enqueueNextMediaPeriod&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x5982;&#x4E0B;: </p>
+<pre><code>  public MediaPeriod enqueueNextMediaPeriod(
+      RendererCapabilities[] rendererCapabilities,
+      TrackSelector trackSelector,
+      Allocator allocator,
+      MediaSource mediaSource,
+      MediaPeriodInfo info) {
+    long rendererPositionOffsetUs =
+        loading == null
+            ? (info.id.isAd() &amp;&amp; info.contentPositionUs != C.TIME_UNSET
+                ? info.contentPositionUs
+                : 0)
+            : (loading.getRendererOffset() + loading.info.durationUs - info.startPositionUs);
+
+    // &#x521B;&#x5EFA;MediaPeriodHolder    
+    MediaPeriodHolder newPeriodHolder =
+        new MediaPeriodHolder(
+            rendererCapabilities,
+            rendererPositionOffsetUs,
+            trackSelector,
+            allocator,
+            mediaSource,
+            info);
+    if (loading != null) {
+      Assertions.checkState(hasPlayingPeriod());
+      loading.setNext(newPeriodHolder);
+    }
+    oldFrontPeriodUid = null;
+    loading = newPeriodHolder;
+    length++;
+    return newPeriodHolder.mediaPeriod;
+  }
+</code></pre><p>&#x800C;MediaPeriodHolder&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x662F;:   </p>
+<pre><code>  public MediaPeriodHolder(
+      RendererCapabilities[] rendererCapabilities,
+      long rendererPositionOffsetUs,
+      TrackSelector trackSelector,
+      Allocator allocator,
+      MediaSource mediaSource,
+      MediaPeriodInfo info) {
+    this.rendererCapabilities = rendererCapabilities;
+    this.rendererPositionOffsetUs = rendererPositionOffsetUs;
+    this.trackSelector = trackSelector;
+    this.mediaSource = mediaSource;
+    this.uid = info.id.periodUid;
+    this.info = info;
+    sampleStreams = new SampleStream[rendererCapabilities.length];
+    mayRetainStreamFlags = new boolean[rendererCapabilities.length];
+    mediaPeriod =
+        createMediaPeriod(
+            info.id, mediaSource, allocator, info.startPositionUs, info.endPositionUs);
+  }
+</code></pre><p>&#x63A5;&#x7740;&#x662F;createMediaPeriod():  </p>
+<pre><code>  /** Returns a media period corresponding to the given {@code id}. */
+  private static MediaPeriod createMediaPeriod(
+      MediaPeriodId id,
+      MediaSource mediaSource,
+      Allocator allocator,
+      long startPositionUs,
+      long endPositionUs) {
+    MediaPeriod mediaPeriod = mediaSource.createPeriod(id, allocator, startPositionUs);
+    if (endPositionUs != C.TIME_UNSET &amp;&amp; endPositionUs != C.TIME_END_OF_SOURCE) {
+      mediaPeriod =
+          new ClippingMediaPeriod(
+              mediaPeriod, /* enableInitialDiscontinuity= */ true, /* startUs= */ 0, endPositionUs);
+    }
+    return mediaPeriod;
+  }
+</code></pre><p>&#x7136;&#x540E;&#x5C31;&#x662F;MediaSource.createPeriod()&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x7528;ProgressiveMediaPeriod&#x6765;&#x770B;:  </p>
+<pre><code>  public MediaPeriod createPeriod(MediaPeriodId id, Allocator allocator, long startPositionUs) {
+    DataSource dataSource = dataSourceFactory.createDataSource();
+    if (transferListener != null) {
+      dataSource.addTransferListener(transferListener);
+    }
+    return new ProgressiveMediaPeriod(
+        uri,
+        dataSource,
+        extractorsFactory.createExtractors(),
+        loadableLoadErrorHandlingPolicy,
+        createEventDispatcher(id),
+        this,
+        allocator,
+        customCacheKey,
+        continueLoadingCheckIntervalBytes);
+  }
+</code></pre><h4 id="&#x518D;&#x770B;mediaperiodprepare&#x90E8;&#x5206;">&#x518D;&#x770B;MediaPeriod.prepare&#x90E8;&#x5206;</h4>
+<p>&#x8FD9;&#x91CC;&#x8FD8;&#x662F;&#x7528;&#x666E;&#x901A;&#x89C6;&#x9891;&#x7684;ProgressiveMediaPeriod&#x6765;&#x770B;: </p>
+<pre><code>  public void prepare(Callback callback, long positionUs) {
+    this.callback = callback;
+    loadCondition.open();
+    // &#x53C8;&#x8C03;&#x7528;&#x4E86;startLoading()
+    startLoading();
+  }
+</code></pre><p>&#x63A5;&#x7740;&#x770B;startLoading()&#x65B9;&#x6CD5;:   </p>
+<pre><code>  private void startLoading() {
+    // &#x6CE8;&#x610F;&#x8FD9;&#x4E2A;loadable&#xFF0C;&#x91CC;&#x9762;&#x6709;uri&#x548C;DataSource
+    ExtractingLoadable loadable =
+        new ExtractingLoadable(
+            uri, dataSource, extractorHolder, /* extractorOutput= */ this, loadCondition);
+    if (prepared) {
+      SeekMap seekMap = getPreparedState().seekMap;
+      Assertions.checkState(isPendingReset());
+      if (durationUs != C.TIME_UNSET &amp;&amp; pendingResetPositionUs &gt; durationUs) {
+        loadingFinished = true;
+        pendingResetPositionUs = C.TIME_UNSET;
+        return;
+      }
+      loadable.setLoadPosition(
+          seekMap.getSeekPoints(pendingResetPositionUs).first.position, pendingResetPositionUs);
+      pendingResetPositionUs = C.TIME_UNSET;
+    }
+    extractedSamplesCountAtStartOfLoad = getExtractedSamplesCount();
+    // loader&#x662F;&#x6784;&#x9020;&#x51FD;&#x6570;&#x91CC;&#x9762;&#x521B;&#x5EFA;&#x7684;&#x4E00;&#x4E2A;&#x52A0;&#x8F7D;&#x7EBF;&#x7A0B;
+    long elapsedRealtimeMs =
+        loader.startLoading(
+            loadable, this, loadErrorHandlingPolicy.getMinimumLoadableRetryCount(dataType));
+    eventDispatcher.loadStarted(
+        loadable.dataSpec,
+        C.DATA_TYPE_MEDIA,
+        C.TRACK_TYPE_UNKNOWN,
+        /* trackFormat= */ null,
+        C.SELECTION_REASON_UNKNOWN,
+        /* trackSelectionData= */ null,
+        /* mediaStartTimeUs= */ loadable.seekTimeUs,
+        durationUs,
+        elapsedRealtimeMs);
+  }
+</code></pre><p>&#x63A5;&#x7740;&#x770B;&#x4E00;&#x4E0B;Loader&#x7C7B;&#x7684;startLoading()&#x65B9;&#x6CD5;:   </p>
+<pre><code>  public &lt;T extends Loadable&gt; long startLoading(
+      T loadable, Callback&lt;T&gt; callback, int defaultMinRetryCount) {
+    Looper looper = Looper.myLooper();
+    Assertions.checkState(looper != null);
+    fatalError = null;
+    long startTimeMs = SystemClock.elapsedRealtime();
+    new LoadTask&lt;&gt;(looper, loadable, callback, defaultMinRetryCount, startTimeMs).start(0);
+    return startTimeMs;
+  }
+</code></pre><p>&#x91CC;&#x9762;&#x542F;&#x52A8;&#x4E86;LoadTask&#xFF0C;LoadTask&#x662F;&#x4E00;&#x4E2A;Runnable&#x7684;&#x5B9E;&#x73B0;&#x7C7B;,&#x6211;&#x4EEC;&#x5C31;&#x76F4;&#x63A5;&#x770B;&#x5B83;&#x7684;run&#x65B9;&#x6CD5;:  </p>
+<pre><code>private final class LoadTask&lt;T extends Loadable&gt; extends Handler implements Runnable {
+    public void run() {
+      try {
+        executorThread = Thread.currentThread();
+        if (!canceled) {
+          TraceUtil.beginSection(&quot;load:&quot; + loadable.getClass().getSimpleName());
+          try {
+            // &#x6700;&#x7EC8;&#x8C03;&#x7528;&#x7684;&#x662F;&#x8FD9;&#x4E2A;&#xFF0C;&#x800C;loadable&#x662F;&#x5565;&#xFF1F;&#x4ED6;&#x662F;&#x4E0A;&#x9762;&#x521B;&#x5EFA;&#x7684;ExtractingLoadable
+            loadable.load();
+          } finally {
+            TraceUtil.endSection();
+          }
+        }
+        if (!released) {
+          sendEmptyMessage(MSG_END_OF_SOURCE);
+        }
+      } catch (IOException e) {
+        if (!released) {
+          obtainMessage(MSG_IO_EXCEPTION, e).sendToTarget();
+        }
+      } catch (InterruptedException e) {
+        // The load was canceled.
+        Assertions.checkState(canceled);
+        if (!released) {
+          sendEmptyMessage(MSG_END_OF_SOURCE);
+        }
+      } catch (Exception e) {
+        // This should never happen, but handle it anyway.
+        Log.e(TAG, &quot;Unexpected exception loading stream&quot;, e);
+        if (!released) {
+          obtainMessage(MSG_IO_EXCEPTION, new UnexpectedLoaderException(e)).sendToTarget();
+        }
+      } catch (OutOfMemoryError e) {
+        // This can occur if a stream is malformed in a way that causes an extractor to think it
+        // needs to allocate a large amount of memory. We don&apos;t want the process to die in this
+        // case, but we do want the playback to fail.
+        Log.e(TAG, &quot;OutOfMemory error loading stream&quot;, e);
+        if (!released) {
+          obtainMessage(MSG_IO_EXCEPTION, new UnexpectedLoaderException(e)).sendToTarget();
+        }
+      } catch (Error e) {
+        // We&apos;d hope that the platform would kill the process if an Error is thrown here, but the
+        // executor may catch the error (b/20616433). Throw it here, but also pass and throw it from
+        // the handler thread so that the process dies even if the executor behaves in this way.
+        Log.e(TAG, &quot;Unexpected error loading stream&quot;, e);
+        if (!released) {
+          obtainMessage(MSG_FATAL_ERROR, e).sendToTarget();
+        }
+        throw e;
+      }
+    }
+
+}
+</code></pre><p>&#x8981;&#x60F3;&#x770B;ExtractingLoadable.load()&#x65B9;&#x6CD5;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x770B;&#x4E00;&#x4E0B;ExtractingLoadable&#x7C7B;&#xFF0C;&#x4EE5;&#x53CA;&#x4ED6;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;:</p>
+<pre><code>/** Loads the media stream and extracts sample data from it. */
+final class ExtractingLoadable implements Loadable, IcyDataSource.Listener {
+    // DataSource&#x662F;&#x4ECE;&#x6D41;&#x4E2D;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x7684;&#x90E8;&#x5206;
+    public ExtractingLoadable(
+        Uri uri,
+        DataSource dataSource,
+        ExtractorHolder extractorHolder,
+        ExtractorOutput extractorOutput,
+        ConditionVariable loadCondition) {
+      this.uri = uri;
+      this.dataSource = new StatsDataSource(dataSource);
+      this.extractorHolder = extractorHolder;
+      this.extractorOutput = extractorOutput;
+      this.loadCondition = loadCondition;
+      this.positionHolder = new PositionHolder();
+      this.pendingExtractorSeek = true;
+      this.length = C.LENGTH_UNSET;
+      dataSpec = buildDataSpec(/* position= */ 0);
+    }
+
+    public void load() throws IOException, InterruptedException {
+      int result = Extractor.RESULT_CONTINUE;
+      while (result == Extractor.RESULT_CONTINUE &amp;&amp; !loadCanceled) {
+        ExtractorInput input = null;
+        try {
+          long position = positionHolder.position;
+          // DataSpec&#x662F;&#x8868;&#x793A;&#x6570;&#x636E;&#x533A;&#x57DF;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;buildDataSpec&#x4F1A;&#x901A;&#x8FC7;Uri&#x548C;position&#x6765;&#x786E;&#x5B9A;&#x5177;&#x4F53;&#x7684;&#x6570;&#x636E;&#x533A;&#x95F4;
+          dataSpec = buildDataSpec(position);
+          // &#x83B7;&#x53D6;&#x6570;&#x636E;&#x7684;&#x957F;&#x5EA6;
+          length = dataSource.open(dataSpec);
+          if (length != C.LENGTH_UNSET) {
+            length += position;
+          }
+          Uri uri = Assertions.checkNotNull(dataSource.getUri());
+          icyHeaders = IcyHeaders.parse(dataSource.getResponseHeaders());
+          DataSource extractorDataSource = dataSource;
+          if (icyHeaders != null &amp;&amp; icyHeaders.metadataInterval != C.LENGTH_UNSET) {
+            extractorDataSource = new IcyDataSource(dataSource, icyHeaders.metadataInterval, this);
+            icyTrackOutput = icyTrack();
+            icyTrackOutput.format(ICY_FORMAT);
+          }
+          input = new DefaultExtractorInput(extractorDataSource, position, length);
+          // Extractor&#x662F;&#x4ECE;&#x89C6;&#x9891;&#x5BB9;&#x5668;&#x4E2D;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x7684;&#xFF0C;selectExtractor&#x65B9;&#x6CD5;&#x5185;&#x90E8;&#x4F1A;&#x53BB;&#x9009;&#x62E9;&#x5BF9;&#x5E94;&#x7684;Extractor
+          // &#x5982;&#x679C;&#x662F;MP4&#x7684;&#x8BDD;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4F1A;&#x8FD4;&#x56DE;Mp4Extractor&#x5BF9;&#x8C61;
+          Extractor extractor = extractorHolder. (input, extractorOutput, uri);
+
+          // MP3 live streams commonly have seekable metadata, despite being unseekable.
+          if (icyHeaders != null &amp;&amp; extractor instanceof Mp3Extractor) {
+            ((Mp3Extractor) extractor).disableSeeking();
+          }
+
+          if (pendingExtractorSeek) {
+            extractor.seek(position, seekTimeUs);
+            pendingExtractorSeek = false;
+          }
+          while (result == Extractor.RESULT_CONTINUE &amp;&amp; !loadCanceled) {
+            loadCondition.block();
+            // extractor&#x4E0D;&#x65AD;&#x4ECE;input&#x6D41;&#x4E2D;&#x53D6;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x679C;&#x662F;mp4extractor&#x7684;&#x8BDD;
+            // &#x91CC;&#x9762;&#x4F1A;&#x5148;&#x6267;&#x884C;readAtomHeader&#xFF0C;&#x7136;&#x540E;atomheader&#x89E3;&#x6790;&#x5B8C;&#x6BD5;&#x540E;&#x53BB;&#x6267;&#x884C;processMoovAtom
+            // &#x7B49;moovatom&#x6267;&#x884C;&#x5B8C;&#x540E;&#x5C31;&#x4F1A;&#x901A;&#x8FC7;message&#x56DE;&#x8C03;onPrepared&#x65B9;&#x6CD5;
+            result = extractor.read(input, positionHolder);
+            if (input.getPosition() &gt; position + continueLoadingCheckIntervalBytes) {
+              position = input.getPosition();
+              loadCondition.close();
+              // &#x6267;&#x884C;&#x5B8C;&#x6210;&#x540E;&#x4F1A;&#x6267;&#x884C;&#x5230;onContinueLoadingRequestedRunnable&#x4E2D;
+              handler.post(onContinueLoadingRequestedRunnable);
+            }
+          }
+        } finally {
+          if (result == Extractor.RESULT_SEEK) {
+            result = Extractor.RESULT_CONTINUE;
+          } else if (input != null) {
+            positionHolder.position = input.getPosition();
+          }
+          Util.closeQuietly(dataSource);
+        }
+      }
+    }
+}
+</code></pre><p>&#x6211;&#x4EEC;&#x770B;&#x5230;&#x6570;&#x636E;&#x52A0;&#x8F7D;&#x5B8C;&#x6210;&#x540E;&#x4F1A;&#x6267;&#x884C;&#x5230;onContinueLoadingRequestedRunnable&#x4E2D;:<br>&#x800C;&#x8BE5;Runnable&#x7684;&#x5B9E;&#x73B0;: </p>
+<pre><code>onContinueLoadingRequestedRunnable =
+    () -&gt; {
+      if (!released) {
+        Assertions.checkNotNull(callback)
+            .onContinueLoadingRequested(ProgressiveMediaPeriod.this);
+      }
+    };
+</code></pre><p>&#x4F1A;&#x8C03;&#x7528;&#x5230;onContinueLoadingRequested&#xFF0C;&#x8BE5;&#x5B9E;&#x73B0;&#x7C7B;&#x5C31;&#x662F;ExoPlayerImplInternal&#x7C7B;:  </p>
+<pre><code>  @Override
+  public void onContinueLoadingRequested(MediaPeriod source) {
+    handler.obtainMessage(MSG_SOURCE_CONTINUE_LOADING_REQUESTED, source).sendToTarget();
+  }
+</code></pre><p>&#x53C8;&#x662F;&#x53D1;&#x6D88;&#x606F;&#xFF0C;&#x6211;&#x4EEC;&#x7EE7;&#x7EED;&#x770B;&#x4E0B;handleMessage&#x65B9;&#x6CD5;&#x91CC;&#x9762;&#x7684;MSG_SOURCE_CONTINUE_LOADING_REQUESTED&#xFF0C;&#x6536;&#x5230;&#x8BE5;message&#x4F1A;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x65B9;&#x6CD5;: </p>
+<pre><code>private void handleContinueLoadingRequested(MediaPeriod mediaPeriod) {
+    if (!queue.isLoading(mediaPeriod)) {
+      // Stale event.
+      return;
+    }
+    queue.reevaluateBuffer(rendererPositionUs);
+    // &#x5C1D;&#x8BD5;&#x53BB;&#x52A0;&#x8F7D;&#x4E0B;&#x4E00;&#x4E2A;MediaPeriod
+    maybeContinueLoading();
+}
+
+  private void maybeContinueLoading() {
+    MediaPeriodHolder loadingPeriodHolder = queue.getLoadingPeriod();
+    long nextLoadPositionUs = loadingPeriodHolder.getNextLoadPositionUs();
+    if (nextLoadPositionUs == C.TIME_END_OF_SOURCE) {
+      setIsLoading(false);
+      return;
+    }
+    long bufferedDurationUs =
+        getTotalBufferedDurationUs(/* bufferedPositionInLoadingPeriodUs= */ nextLoadPositionUs);
+    boolean continueLoading =
+        loadControl.shouldContinueLoading(
+            bufferedDurationUs, mediaClock.getPlaybackParameters().speed);
+    setIsLoading(continueLoading);
+    if (continueLoading) {
+      loadingPeriodHolder.continueLoading(rendererPositionUs);
+    }
+  }
+</code></pre><p>&#x5230;&#x8FD9;&#x91CC;&#x57FA;&#x672C;&#x8BB2;&#x5B8C;&#x4E86;doSomeWork()&#x90E8;&#x5206;&#x3002;  </p>
+<p>&#x603B;&#x7ED3;&#x4E00;&#x4E0B;:   </p>
+<ol>
+<li>SimpleExoPlayer.prepare()&#x91CC;&#x9762;&#x8C03;&#x7528;ExoPlayerImpl.prepare()&#x7136;&#x540E;&#x518D;&#x8C03;&#x7528;ExoPlayerImplInternal.prepare()&#x7136;&#x540E;ExoPlayerImplInternal&#x91CC;&#x9762;&#x901A;&#x8FC7;handler&#x53D1;&#x9001;MSG_PREPARE&#xFF0C;&#x6536;&#x5230;message&#x540E;&#x4F1A;&#x6267;&#x884C;prepareInternal()&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x5148;&#x662F;&#x8C03;&#x7528;MediaSouorce.prepare&#x53BB;&#x505A;&#x4E00;&#x4E9B;&#x521D;&#x59CB;&#x5316;&#x64CD;&#x4F5C;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x53D1;&#x9001;MSG_DO_SOME_WORK&#xFF0C;&#x6536;&#x5230;&#x6539;&#x6D88;&#x606F;&#x540E;&#x6267;&#x884C;doSomeWork()(&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6267;&#x884C;&#x5B8C;&#x540E;&#x4F1A;&#x53D1;&#x6D88;&#x606F;&#xFF0C;&#x518D;&#x5FAA;&#x73AF;&#x6267;&#x884C;doSomeWork()&#x65B9;&#x6CD5;)&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x518D;&#x8C03;&#x7528;updatePeriods()&#x65B9;&#x6CD5;&#x3002;     </li>
+<li>&#x8FD9;&#x4E2A;updatePeroid()&#x65B9;&#x6CD5;&#x5462;&#x7070;&#x5E38;&#x91CD;&#x8981;&#xFF0C;&#x91CC;&#x9762;&#x53C8;&#x662F;&#x4E09;&#x6B65;: &#x7B2C;&#x4E00;&#x4E2A;&#x6B65;&#x9AA4;&#x662F;&#x53BB;&#x52A0;&#x8F7D;MediaPeroid&#xFF0C;&#x7136;&#x540E;&#x8C03;&#x7528;MediaPeriod.prepare()&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x53C8;&#x8C03;&#x7528;ExtractingLoadable&#x53BB;&#x52A0;&#x8F7D;&#x6570;&#x636E;&#xFF0C;&#x91CC;&#x9762;&#x4F1A;&#x7528;DataSource&#x548C;Extractor&#x53BB;&#x89E3;&#x6790;&#x6570;&#x636E;(&#x89E3;&#x6790;mp4&#x6587;&#x4EF6;&#x7684;moov&#x6570;&#x636E;&#x540E;&#x6267;&#x884C;onPrepared&#x56DE;&#x8C03;)&#x3002; &#x7B2C;&#x4E8C;&#x6B65;&#x662F;&#x5728;playWhenReady&#x540E;&#xFF0C;&#x4F1A;&#x6267;&#x884C;queue.advancePlayingPeriod()&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x4F1A;&#x53BB;&#x8BBE;&#x7F6E;&#x8981;&#x64AD;&#x653E;&#x7684;playingMediaPeriodHolder&#x3002;&#x7B2C;&#x4E09;&#x90E8;&#x662F;&#x6267;&#x884C;updatePlayingPeriodRenderers()&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x4F1A;&#x53D6;playingMediaPeriodHolder&#x7136;&#x540E;&#x8C03;&#x7528;enableRenderers()&#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x91CC;&#x9762;&#x5FAA;&#x73AF;&#x904D;&#x5386;renderers&#x6570;&#x7EC4;&#xFF0C;&#x5BF9;&#x6BCF;&#x4E2A;&#x90FD;&#x8C03;&#x7528;renderer.start()&#x3002;</li>
+</ol>
+<p>&#x4E0B;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x4F1A;&#x901A;&#x8FC7;&#x5E8F;&#x5217;&#x56FE;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x63CF;&#x8FF0;&#x4E00;&#x4E0B;&#x8FD9;&#x90E8;&#x5206;&#x7684;&#x8C03;&#x7528;&#x903B;&#x8F91;&#x3002;</p>
+<p><a href="https://github.com/CharonChui/AndroidNote/blob/master/VideoDevelopment/ExoPlayer/2.%20ExoPlayer%20MediaSource%E7%AE%80%E4%BB%8B.md" target="_blank">&#x4E0A;&#x4E00;&#x7BC7;: 2. ExoPlayer MediaSource&#x7B80;&#x4ECB;</a><br><a href="https://github.com/CharonChui/AndroidNote/blob/master/VideoDevelopment/ExoPlayer/4.%20ExoPlayer%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8Bprepare%E5%BA%8F%E5%88%97%E5%9B%BE.md" target="_blank">&#x4E0B;&#x4E00;&#x7BC7;: 4. ExoPlayer&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E4B;prepare&#x5E8F;&#x5217;&#x56FE;</a></p>
+<hr>
+<ul>
+<li>&#x90AE;&#x7BB1; &#xFF1A;charon.chui@gmail.com  </li>
+<li>Good Luck! </li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="2. ExoPlayer MediaSource简介.html" class="navigation navigation-prev " aria-label="Previous page: 2. ExoPlayer MediaSource简介">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="4. ExoPlayer源码分析之prepare序列图.html" class="navigation navigation-next " aria-label="Next page: 4. ExoPlayer源码分析之prepare序列图">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"3. ExoPlayer源码分析之prepare方法","level":"1.4.5.3","depth":3,"next":{"title":"4. ExoPlayer源码分析之prepare序列图","level":"1.4.5.4","depth":3,"path":"VideoDevelopment/ExoPlayer/4. ExoPlayer源码分析之prepare序列图.md","ref":"VideoDevelopment/ExoPlayer/4. ExoPlayer源码分析之prepare序列图.md","articles":[]},"previous":{"title":"2. ExoPlayer MediaSource简介","level":"1.4.5.2","depth":3,"path":"VideoDevelopment/ExoPlayer/2. ExoPlayer MediaSource简介.md","ref":"VideoDevelopment/ExoPlayer/2. ExoPlayer MediaSource简介.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"VideoDevelopment/ExoPlayer/3. ExoPlayer源码分析之prepare方法.md","mtime":"2024-08-20T13:43:22.539Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-08-20T15:50:40.722Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
